@@ -15,11 +15,26 @@ import Highlight from '@/components/Highlight.astro'
       <div class="text-sm text-secondary mt-3 text-center lg:text-left">{hero.description}</div>
       <SocialList className="mt-[60px]" client:load />
     </div>
+
+
     <div class="mt-20 lg:mt-0">
       <div
-        class="size-[200px] lg:size-[300px] rounded-full overflow-hidden border border-primary bg-zinc-100 dark:bg-zinc-800"
+        class="p-[3px] rounded-full"
+        style="
+          background: conic-gradient(
+            from 300deg,
+            #DB4437 0deg 105deg,
+            #4285F4 105deg 210deg,
+            #0F9D58 210deg 315deg,
+            #F4B400 315deg 360deg
+          );
+        "
       >
-        <img class="size-full" src={author.avatar} alt="Site owner avatar" loading="lazy" />
+        <div
+          class="size-[200px] lg:size-[300px] rounded-full overflow-hidden border border-primary bg-zinc-100 dark:bg-zinc-800"
+        >
+          <img class="size-full" src={author.avatar} alt="Site owner avatar" loading="lazy" />
+        </div>
       </div>
     </div>
 

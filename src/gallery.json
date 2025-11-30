@@ -1,0 +1,20 @@
+[
+  {
+    "name": "日本",
+    "slug": "japan",
+    "cover": "/images/Gallery/Japan/cover.jpg",
+    "lat": 36.2048,
+    "lng": 138.2529,
+    "coords": [138.2529, 36.2048],
+    "photos": ["/images/Gallery/Japan/photo1.jpg", "/images/Gallery/Japan/photo2.jpg"]
+  },
+  {
+    "name": "法国",
+    "slug": "ireland",
+    "cover": "/images/Gallery/Ireland/cover.jpg",
+    "lat": 46.2276,
+    "lng": 2.2137,
+    "coords": [46.2276, 2.2137],
+    "photos": ["/images/Gallery/Ireland/photo1.jpg", "/images/Gallery/Ireland/photo2.jpg"]
+  }
+]

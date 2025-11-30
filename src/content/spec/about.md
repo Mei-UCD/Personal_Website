@@ -4,27 +4,47 @@ description: 这是一份站长的自述报告，请查收。
 comments: false
 ---
 
-## 关于 Gyoza
+## 关于 本站
 
-Gyoza 是一个使用 Astro 和 React 开发的博客主题。Gyoza 借鉴了 [Shiro](https://github.com/innei/Shiro) 和一些网站的设计。
+本站基于 [Gyoza 模板](https://www.lxchapu.com)开发，用于展示我的个人项目和学习成果。
 
-Gyoza 的核心理念是简洁，快速，可爱。
+这里主要包含：
 
-- 在 [Markdown 示例](/posts/markdown) 中展示了 Markdown 的渲染样式
-- 可以前往 [Gyoza 使用指南](/posts/guide) 了解 Gyoza 的使用方法
+- **设计与建筑**：BIM 建模、建筑立面参数化设计等项目分享
+- **编程与技术**：Web 开发、图像处理、AI 项目实践
+- **个人笔记与总结**：设计理论、学习心得、实用教程等
 
-Gyoza 是开源的，如果你对这个项目感兴趣，欢迎前往 Gyoza 的 [Github 仓库](https://github.com/lxchapu/astro-gyoza) 来提 Issue 或者 PR。
+网站的目的不仅是 **记录我的工作和学习**，也是希望能 **与有相同兴趣的人交流**。
 
-## 关于作者
+## 关于 我
 
-我是 lxchapu，是一名前端开发者，喜欢各种有趣的东西。欢迎访问我的个人网站 [www.lxchapu.com](https://www.lxchapu.com)，了解关于我更多的信息。
+我是 **Mei**，以前是一名建筑设计者，现在在图像处理领域沉浮。平时对**Web开发、人工智能** 也充满好奇。有时候，我也会把学习过程和一些小项目记录在这里，就像写日记一样，希望有一天翻出来还能感受到当下的思考和灵感。
 
-## 致谢
+## 技术栈
 
-感谢以下项目：
+### 编程语言
 
-- [Astro](https://astro.build/)
-- [React](https://reactjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Jotai](https://jotai.org/)
+- Python
+- C++
+- HTML
+- CSS
+- JavaScript
+- PHP
+- MySQL
+- Markdown
+
+### 设计
+
+- Rhinoceros
+- Grasshopper
+- AutoCAD
+- Revit
+- 3DMax
+- Keyshot
+- Photoshop
+
+### 自然语言
+
+- 汉语
+- 英语
+- 日语

@@ -16,13 +16,25 @@ const postsCollection = defineCollection({
   }),
 })
 
+// const projectsCollection = defineCollection({
+//   type: 'data',
+//   schema: z.object({
+//     title: z.string(),
+//     description: z.string(),
+//     image: z.string(),
+//     link: z.string().url(),
+//     category: z.string().optional(),
+//     slug: z.string(),
+//   }),
+// })
+
 const projectsCollection = defineCollection({
-  type: 'data',
+  type: 'content',
   schema: z.object({
     title: z.string(),
     description: z.string(),
     image: z.string(),
-    link: z.string().url(),
+    category: z.string(),
   }),
 })
 

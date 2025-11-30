@@ -39,7 +39,19 @@ export function SocialList({ className }: { className?: string }) {
               className="absolute inset-0 -z-1 rounded-full group-hover:scale-105 transition"
               style={{ backgroundColor: social.color }}
             ></span>
-            <i className={clsx('iconfont', social.icon)} />
+
+            
+
+            {/* 判断是否是 SVG */}
+            {social.icon === 'svg' ? (
+              <img src={social.svgPath} alt={social.name} className="w-15 h-15 absolute inset-0 -z-1 rounded-full group-hover:scale-105 transition" />
+
+
+            ) : (
+              <i className={clsx('iconfont', social.icon)} />
+            )}
+
+
           </a>
         </motion.li>
       ))}
