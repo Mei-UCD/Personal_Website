@@ -100,7 +100,7 @@
     "perPage": 10
   },
   "footer": {
-    "startTime": "2025-12-1T00:00:00Z"
+    "startTime": "2025-11-10T00:00:00Z"
   },
   "waline": {
     "serverURL": "https://waline.lxchapu.com"
