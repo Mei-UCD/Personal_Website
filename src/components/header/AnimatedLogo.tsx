@@ -22,8 +22,11 @@ export function AnimatedLogo() {
 }
 
 function Logo() {
+  const pathname = window.location.pathname
+  const lang = pathname.startsWith('/en') ? 'en' : 'zh'
+  const homeHref = lang === 'zh' ? '/' : `/${lang}/`
   return (
-    <a className="block" href="/" title="Nav to home">
+    <a className="block" href={homeHref} title="Nav to home">
       <img
         className="size-[40px] select-none object-cover rounded-2xl"
         src={author.avatar}
