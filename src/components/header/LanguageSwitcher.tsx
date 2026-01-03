@@ -4,16 +4,18 @@ import { getLangFromPath, getLocalizedPath, type Lang } from '@/utils/i18n'
 
 export function LanguageSwitcher() {
   const [currentLang, setCurrentLang] = useState<Lang>('zh')
-  const [pathname, setPathname] = useState('')
+  // const [pathname, setPathname] = useState('')
 
   useEffect(() => {
-    setPathname(window.location.pathname)
+    // setPathname(window.location.pathname)
     setCurrentLang(getLangFromPath(window.location.pathname))
   }, [])
 
   const toggleLang = () => {
     const newLang: Lang = currentLang === 'zh' ? 'en' : 'zh'
-    const newPath = getLocalizedPath(pathname, newLang)
+
+    const currentPath = window.location.pathname
+    const newPath = getLocalizedPath(currentPath, newLang)
     window.location.href = newPath
   }
 
