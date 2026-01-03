@@ -8,16 +8,32 @@ import SectionBlock from '@/components/SectionBlock.astro'
 import { PostToc } from '@/components/post/PostToc'
 import { ReadingProgress } from '@/components/post/ReadingProgress'
 import { ActionAside } from '@/components/post/ActionAside'
+import { getLangFromPath, getTranslations, defaultLang, getLocalizedPath, getPostSlug } from '@/utils/i18n'
 
 // 获取所有 projects
 import { getCollection } from 'astro:content'
+import { languages } from '@/utils/i18n'
 
 export const getStaticPaths = (async () => {
   const projects = await getCollection('projects')
-  return projects.map(project => ({
-    params: { slug: project.slug },
-    props: { current: project },
-  }))
+  const paths: Array<{
+    params: { slug: string }
+    props: { current: CollectionEntry<'projects'> }
+    locale?: string
+  }> = []
+
+  // Generate paths for each locale
+  for (const locale of languages) {
+    for (const project of projects) {
+      paths.push({
+        params: { slug: project.slug },
+        props: { current: project },
+        locale,
+      })
+    }
+  }
+
+  return paths
 }) satisfies GetStaticPaths
 
 interface Props {
@@ -27,6 +43,8 @@ interface Props {
 const { current } = Astro.props
 // const { Content } = await current.render()
 const { headings, Content, remarkPluginFrontmatter } = await current.render()
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
 
 const mdSlug = `/projects/${current.slug}`
 ---
@@ -75,13 +93,13 @@ const mdSlug = `/projects/${current.slug}`
 
     <div class="hidden lg:block" data-pagefind-ignore>
       <aside class="sticky top-20">
-        <SectionBlock title="目录">
+        <SectionBlock title={t.post.toc}>
           <PostToc headings={headings} client:idle />
           <hr class="my-2 border-primary max-w-[100px]" />
-          <ReadingProgress client:idle />
+          <ReadingProgress client:idle label={t.post.progress} />
         </SectionBlock>
 
-        <ActionAside client:idle />
+        <!-- <ActionAside lang={lang} client:idle /> -->
       </aside>
     </div>
     

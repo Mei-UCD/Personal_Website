@@ -113,9 +113,29 @@ const categories = {
 ))} -->
 
 
+
+
+
+
+
+
+
 ---
 import { getCollection } from 'astro:content'
-const projects = await getCollection('projects')
+import { getLangFromPath, defaultLang, getLocalizedPath, getPostSlug } from '@/utils/i18n'
+
+const lang = (getLangFromPath(Astro.url.pathname) ?? defaultLang)
+
+const allProjects = await getCollection('projects')
+
+const projects = allProjects.filter((p) => {
+  if (lang === 'en') {
+    return p.slug.startsWith('en/')
+  }
+  // zh
+  return !p.slug.includes('/')
+})
+
 const categories = {
   'Architecture': projects.filter((p) => p.data.category?.includes('Architecture')),
   'Full Stack': projects.filter((p) => p.data.category?.includes('FullStack')),
@@ -136,11 +156,6 @@ const categories = {
   </div>
 </nav>
 
-
-
-
-
-
 {Object.entries(categories).map(([categoryName, categoryProjects]) => (
   <>
     <h2 id={categoryName.replace(/\s+/g, '-')} class="text-xl font-bold mt-12 mb-4">
@@ -150,7 +165,7 @@ const categories = {
     <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {categoryProjects.map((project) => (
         <li>
-          <a href={`/projects/${project.slug}`}>
+          <a href={getLocalizedPath(`/projects/${getPostSlug(project.slug)}`,lang)}>
             <div class="rounded-lg bg-accent/10 overflow-hidden group">
               <div class="aspect-video overflow-hidden">
                 <img

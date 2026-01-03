@@ -14,19 +14,56 @@ import PostNav from '@/components/post/PostNav.astro'
 import { Comments } from '@/components/comment'
 import { ActionAside } from '@/components/post/ActionAside'
 import { PostCopyright } from '@/components/post/PostCopyright'
+import { languages } from '@/utils/i18n'
+import { getLangFromPath, getTranslations, defaultLang, getLocalizedPath, getPostSlug } from '@/utils/i18n'
 
+
+// export const getStaticPaths = (async () => {
+//   const sortedPosts = await getSortedPosts('zh')
+
+//   const paths: Array<{
+//     params: { slug: string }
+//     props: {
+//       current: CollectionEntry<'posts'>
+//       prev?: CollectionEntry<'posts'>
+//       next?: CollectionEntry<'posts'>
+//     }
+//     locale?: string
+//   }> = []
+
+//   // Generate paths for each locale
+//   for (const locale of languages) {
+//     for (let index = 0; index < sortedPosts.length; index++) {
+//       const post = sortedPosts[index]
+//       paths.push({
+//         params: { slug: post.slug },
+//         props: {
+//           current: post,
+//           prev: index > 0 ? sortedPosts[index - 1] : undefined,
+//           next: index < sortedPosts.length - 1 ? sortedPosts[index + 1] : undefined,
+//         },
+//         locale,
+//       })
+//     }
+//   }
+
+//   return paths
+// }) satisfies GetStaticPaths
 export const getStaticPaths = (async () => {
-  const sortedPosts = await getSortedPosts()
+  const posts = await getSortedPosts('zh')
 
-  return sortedPosts.map((post, index) => ({
-    params: { slug: post.slug },
+  return posts.map((post, index) => ({
+    params: {
+      slug: post.slug,
+    },
     props: {
       current: post,
-      prev: index > 0 ? sortedPosts[index - 1] : undefined,
-      next: index < sortedPosts.length - 1 ? sortedPosts[index + 1] : undefined,
+      prev: index > 0 ? posts[index - 1] : undefined,
+      next: index < posts.length - 1 ? posts[index + 1] : undefined,
     },
   }))
 }) satisfies GetStaticPaths
+
 
 interface Props {
   current: CollectionEntry<'posts'>
@@ -36,9 +73,14 @@ interface Props {
 
 const { current, prev, next } = Astro.props
 
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
+
+
 const { headings, Content, remarkPluginFrontmatter } = await current.render()
 
-const mdSlug = `/posts/${current.slug}`
+//const mdSlug = `/posts/${current.slug}`
+const mdSlug = getLocalizedPath(`/posts/${getPostSlug(current.slug)}`, lang)
 
 const mdDescription = concat(current.data.category || '', current.data.tags.join(', '))
 
@@ -82,7 +124,7 @@ const lastMod = current.data.lastMod || current.data.date
           tags={current.data.tags}
         />
         <div>
-          <Outdate lastMod={lastMod} client:idle />
+          <Outdate lastMod={lastMod} t={t} client:idle />
         </div>
       </header>
     </div>
@@ -93,17 +135,17 @@ const lastMod = current.data.lastMod || current.data.date
     </div>
     <div class="hidden lg:block" data-pagefind-ignore>
       <aside class="sticky top-20">
-        <SectionBlock title="目录">
+        <SectionBlock title={t.post.toc}>
           <PostToc headings={headings} client:idle />
           <hr class="my-2 border-primary max-w-[100px]" />
-          <ReadingProgress client:idle />
+          <ReadingProgress client:idle label={t.post.progress} />
         </SectionBlock>
-        <ActionAside client:idle />
+        <ActionAside lang={lang} client:idle />
       </aside>
     </div>
     <div data-pagefind-ignore>
       <section class="space-y-6">
-        <PostCopyright title={current.data.title} slug={mdSlug} lastMod={lastMod} client:visible />
+        <PostCopyright title={current.data.title} slug={mdSlug} lastMod={lastMod} lang={lang} client:visible />
         <PostNav prev={prev} next={next} />
         {current.data.comments && <Comments />}
       </section>

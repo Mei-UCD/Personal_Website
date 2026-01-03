@@ -1,4 +1,6 @@
 ---
+import { getLangFromPath, getTranslations, getLocalizedPath, defaultLang } from '@/utils/i18n'
+
 interface Props {
   tags: {
     name: string
@@ -8,15 +10,17 @@ interface Props {
 }
 
 const { tags } = Astro.props
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
 ---
 
 {
   tags.length === 0 ? (
-    <div class="text-center text-sm">作者没有准备标签😦</div>
+    <div class="text-center text-sm">{t.tags.comment}😦</div>
   ) : (
     <div class="flex flex-wrap gap-2.5">
       {tags.map((tag) => (
-        <a class="relative block group" href={`/tags/${tag.slug}`}>
+        <a class="relative block group" href={getLocalizedPath(`/tags/${tag.slug}`, lang)}>
           <div class="absolute -z-1 inset-0 rounded-lg bg-accent/10 group-hover:transition group-hover:bg-accent/20 group-hover:scale-105" />
           <div class="px-2.5 py-2 text-sm flex items-baseline gap-1 select-none">
             <span>{tag.name}</span>

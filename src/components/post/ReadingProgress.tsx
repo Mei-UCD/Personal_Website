@@ -3,7 +3,7 @@ import { useAtomValue } from 'jotai'
 import { pageScrollLocationAtom } from '@/store/scrollInfo'
 import { floor } from 'lodash-es'
 
-export function ReadingProgress() {
+export function ReadingProgress({ label }: { label: string }) {
   const [percent, setPercent] = useState(0)
   const scrollY = useAtomValue(pageScrollLocationAtom)
 
@@ -23,7 +23,7 @@ export function ReadingProgress() {
 
   return (
     <div>
-      <span className="text-sm">进度 {percent}%</span>
+      <span className="text-sm">{label} {percent}%</span>
     </div>
   )
 }

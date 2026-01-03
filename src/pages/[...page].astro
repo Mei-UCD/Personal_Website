@@ -10,23 +10,48 @@ import TagList from '@/components/TagList.astro'
 import CategoryList from '@/components/CategoryList.astro'
 import type { CollectionEntry } from 'astro:content'
 import Hero from '@/components/hero/Hero.astro'
+import { languages } from '@/utils/i18n'
+import { getLangFromPath, getTranslations, getLocalizedPath, defaultLang } from '@/utils/i18n'
+
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang as 'zh' | 'en')
+
 
 export const getStaticPaths = (async () => {
-  const sortedPosts = await getSortedPosts()
   const { perPage } = appConfig.posts
-  const totalPage = Math.ceil(sortedPosts.length / perPage)
 
-  const paths = Array.from({ length: totalPage }).map((_, i) => {
-    const data = sortedPosts.slice(i * perPage, (i + 1) * perPage)
-    const props = { currentPage: i + 1, totalPage, data }
-    const params = {
-      page: i === 0 ? undefined : `page/${i + 1}`,
+  const paths: Array<{
+    params: { page?: string }
+    props: {
+      currentPage: number
+      totalPage: number
+      data: CollectionEntry<'posts'>[]
     }
-    return { params, props }
-  })
+    locale?: string
+  }> = []
+
+  for (const locale of languages) {
+    const sortedPosts = await getSortedPosts(locale)
+    const totalPage = Math.ceil(sortedPosts.length / perPage)
+
+    for (let i = 0; i < totalPage; i++) {
+      paths.push({
+        params: {
+          page: i === 0 ? undefined : `page/${i + 1}`,
+        },
+        props: {
+          currentPage: i + 1,
+          totalPage,
+          data: sortedPosts.slice(i * perPage, (i + 1) * perPage),
+        },
+        locale,
+      })
+    }
+  }
 
   return paths
 }) satisfies GetStaticPaths
+
 
 interface Props {
   currentPage: number
@@ -36,13 +61,16 @@ interface Props {
 
 const { currentPage, totalPage, data } = Astro.props
 
-const hotTags = await getHotTags()
-const allTags = await getAllTags()
-const allCategories = await getAllCategories()
+const hotTags = await getHotTags(5, lang)
+const allTags = await getAllTags(lang)
+const allCategories = await getAllCategories(lang)
 
 const getPageUrl = (page: number) => {
-  if (page === 1) return '/'
-  return `/page/${page}`
+  // if (page === 1) return '/'
+  // return `/page/${page}`
+
+  const path = page === 1 ? '/' : `/page/${page}`
+  return getLocalizedPath(path, lang)
 }
 ---
 
@@ -51,7 +79,7 @@ const getPageUrl = (page: number) => {
     {currentPage === 1 && <Hero />}
     <div class="max-w-[1100px] px-4 md:px-8 py-20 mx-auto grid lg:grid-cols-[auto_300px] gap-10">
       <div class="min-w-0">
-        <SectionBlock title="最新发布">
+        <SectionBlock title={t.pages.latestPosts}>
           <PostList posts={data} />
           {
             totalPage > 1 && (
@@ -62,16 +90,16 @@ const getPageUrl = (page: number) => {
       </div>
       <div>
         <aside class="md:sticky md:top-20 space-y-10">
-          <SectionBlock title="分类">
+          <SectionBlock title={t.pages.categories}>
             <CategoryList categories={allCategories} />
           </SectionBlock>
-          <SectionBlock title="热门标签">
+          <SectionBlock title={t.pages.hotTags}>
             <TagList tags={hotTags} />
             {
               allTags.length > hotTags.length && (
                 <div class="mt-2 text-right">
-                  <a class="text-sm text-secondary hover:text-accent" href="/tags">
-                    更多标签 <i class="iconfont icon-arrow-right" />
+                  <a class="text-sm text-secondary hover:text-accent" href={getLocalizedPath('/tags', lang)}>
+                    {t.pages.moreTags} <i class="iconfont icon-arrow-right" />
                   </a>
                 </div>
               )

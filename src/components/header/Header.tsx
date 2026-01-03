@@ -4,6 +4,7 @@ import { SearchButton } from './SearchButton'
 import { AnimatedLogo } from './AnimatedLogo'
 import { HeaderMeta } from './HeaderMeta'
 import { HeaderDrawer } from './HeaderDrawer'
+import { LanguageSwitcher } from './LanguageSwitcher'
 import { useIsMobile } from './hooks'
 
 export function Header() {
@@ -20,7 +21,8 @@ export function Header() {
           {isMobile ? <AnimatedLogo /> : <HeaderContent />}
           <HeaderMeta />
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-2">
+          <LanguageSwitcher />
           <SearchButton />
         </div>
       </div>

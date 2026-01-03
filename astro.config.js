@@ -21,6 +21,13 @@ import swup from '@swup/astro'
 // https://astro.build/config
 export default defineConfig({
   site: site.url,
+  i18n: {
+    defaultLocale: 'zh',
+    locales: ['zh', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     tailwind(),
     react(),

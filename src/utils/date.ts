@@ -1,35 +1,78 @@
+import type { translations } from '@/utils/i18n'
+type T = (typeof translations)['zh']
+
 // 获取两个日期的相对时间
-export function getRelativeTime(startDate: Date, endDate = new Date()) {
+// export function getRelativeTime(startDate: Date, endDate = new Date()) {
+//   const diffSeconds = Math.floor((endDate.getTime() - startDate.getTime()) / 1000)
+//   if (diffSeconds < 0) {
+//     return null
+//   }
+//   const diffMinutes = Math.floor(diffSeconds / 60)
+//   if (diffMinutes < 10) {
+//     return '刚刚'
+//   }
+//   if (diffMinutes < 60) {
+//     return `${diffMinutes} 分钟前`
+//   }
+//   const diffHours = Math.floor(diffMinutes / 60)
+//   if (diffHours < 24) {
+//     return `${diffHours} 小时前`
+//   }
+//   const diffDays = Math.floor(diffHours / 24)
+//   if (diffDays < 10) {
+//     return `${diffDays} 天前`
+//   }
+//   return null
+// }
+export function getRelativeTime(startDate: Date, t: T, endDate = new Date()) {
   const diffSeconds = Math.floor((endDate.getTime() - startDate.getTime()) / 1000)
-  if (diffSeconds < 0) {
-    return null
-  }
+
+  if (diffSeconds < 0) return null
+
   const diffMinutes = Math.floor(diffSeconds / 60)
+
   if (diffMinutes < 10) {
-    return '刚刚'
+    return t.time.justNow
   }
+
   if (diffMinutes < 60) {
-    return `${diffMinutes} 分钟前`
+    return t.time.minutesAgo.replace('{{count}}', String(diffMinutes))
   }
+
   const diffHours = Math.floor(diffMinutes / 60)
   if (diffHours < 24) {
-    return `${diffHours} 小时前`
+    return t.time.hoursAgo.replace('{{count}}', String(diffHours))
   }
+
   const diffDays = Math.floor(diffHours / 24)
   if (diffDays < 10) {
-    return `${diffDays} 天前`
+    return t.time.daysAgo.replace('{{count}}', String(diffDays))
   }
+
   return null
 }
 
 // 获取一个格式化的日期，格式为：2024 年 1 月 1 日 星期一
-export function getFormattedDate(date: Date) {
-  const year = date.getFullYear() % 100
+// export function getFormattedDate(date: Date) {
+//   const year = date.getFullYear() % 100
+//   const month = date.getMonth() + 1
+//   const day = date.getDate()
+//   const week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][date.getDay()]
+
+//   return `${year} 年 ${month} 月 ${day} 日 ${week}`
+// }
+
+export function getFormattedDate(date: Date, t: T) {
+  const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
-  const week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][date.getDay()]
+  const week = t.date.week[date.getDay()]
 
-  return `${year} 年 ${month} 月 ${day} 日 ${week}`
+  return t.date.format
+    .replace('{{year}}', String(year))
+    .replace('{{month}}', String(month))
+    .replace('{{day}}', String(day))
+    .replace('{{week}}', week)
 }
 
 // 数字前补 0
@@ -38,14 +81,28 @@ function padZero(number: number, len = 2) {
 }
 
 // 获取格式化后的日期时间，格式：2024 年 01 月 01 日 12:00
-export function getFormattedDateTime(date: Date) {
+// export function getFormattedDateTime(date: Date) {
+//   const year = date.getFullYear()
+//   const month = padZero(date.getMonth() + 1)
+//   const day = padZero(date.getDate())
+//   const hours = padZero(date.getHours())
+//   const minutes = padZero(date.getMinutes())
+
+//   return `${year} 年 ${month} 月 ${day} 日 ${hours}:${minutes}`
+// }
+export function getFormattedDateTime(date: Date, t: T) {
   const year = date.getFullYear()
   const month = padZero(date.getMonth() + 1)
   const day = padZero(date.getDate())
-  const hours = padZero(date.getHours())
-  const minutes = padZero(date.getMinutes())
+  const hour = padZero(date.getHours())
+  const minute = padZero(date.getMinutes())
 
-  return `${year} 年 ${month} 月 ${day} 日 ${hours}:${minutes}`
+  return t.date.datetime
+    .replace('{{year}}', String(year))
+    .replace('{{month}}', month)
+    .replace('{{day}}', day)
+    .replace('{{hour}}', hour)
+    .replace('{{minute}}', minute)
 }
 
 // 获取两个日期的相差的天数

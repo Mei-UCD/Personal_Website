@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { menus } from '@/config.json'
 import { clsx } from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -9,6 +9,7 @@ import {
   useShouldHeaderMetaShow,
 } from './hooks'
 import { RootPortal } from '@/components/RootPortal'
+import { getLangFromPath, getMenuWithLang, type Lang } from '@/utils/i18n'
 
 export function HeaderContent() {
   return (
@@ -60,6 +61,16 @@ function HeaderMenu({ isBgShow }: { isBgShow: boolean }) {
   const [mouseX, setMouseX] = useState(0)
   const [mouseY, setMouseY] = useState(0)
   const [radius, setRadius] = useState(0)
+  const [lang, setLang] = useState<Lang>('zh')
+  const [localizedMenus, setLocalizedMenus] = useState(() =>
+    getMenuWithLang(menus, getLangFromPath(window.location.pathname))
+  )
+
+  useEffect(() => {
+    const currentLang = getLangFromPath(window.location.pathname)
+    setLang(currentLang)
+    setLocalizedMenus(getMenuWithLang(menus, currentLang))
+  }, [pathName])
 
   const background = `radial-gradient(${radius}px circle at ${mouseX}px ${mouseY}px, rgb(var(--color-accent) / 0.12) 0%, transparent 65%)`
 
@@ -84,15 +95,23 @@ function HeaderMenu({ isBgShow }: { isBgShow: boolean }) {
         aria-hidden
       ></div>
       <div className="text-sm px-4 flex">
-        {menus.map((menu) => (
-          <HeaderMenuItem
-            key={menu.name}
-            href={menu.link}
-            title={menu.name}
-            icon={menu.icon}
-            isActive={pathName === menu.link}
-          />
-        ))}
+        {localizedMenus.map((menu) => {
+          // Check if current path matches menu link (with or without language prefix)
+          const isActive = pathName === menu.link || 
+                          pathName === `/${lang}${menu.link}` ||
+                          (lang === 'en' && pathName.replace('/en', '') === menu.link) ||
+                          (lang === 'zh' && pathName === menu.link.replace('/zh', ''))
+          
+          return (
+            <HeaderMenuItem
+              key={menu.link}
+              href={menu.link}
+              title={menu.name}
+              icon={menu.icon}
+              isActive={isActive}
+            />
+          )
+        })}
       </div>
     </nav>
   )

@@ -1,10 +1,18 @@
-import { site } from '@/config.json'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useHeaderMetaInfo, useShouldHeaderMetaShow } from './hooks'
+import { useState, useEffect } from 'react'
+import { getLangFromPath, getTranslations, type Lang } from '@/utils/i18n'
 
 export function HeaderMeta() {
   const { title, description, slug } = useHeaderMetaInfo()
   const shouldShow = useShouldHeaderMetaShow()
+  const [siteTitle, setSiteTitle] = useState('')
+
+  useEffect(() => {
+    const lang = getLangFromPath(window.location.pathname)
+    const t = getTranslations(lang)
+    setSiteTitle(t.site.title)
+  }, [])
 
   return (
     <AnimatePresence>
@@ -30,7 +38,7 @@ export function HeaderMeta() {
           </div>
           <div className="hidden md:block min-w-0 text-right">
             <div className="text-secondary text-xs truncate">{slug}</div>
-            <div>{site.title}</div>
+            <div>{siteTitle}</div>
           </div>
         </motion.div>
       )}

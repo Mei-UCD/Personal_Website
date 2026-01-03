@@ -1,6 +1,26 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import PostCard from './PostCard.astro'
+import { getCollection } from 'astro:content'
+import { getLangFromPath, defaultLang } from '@/utils/i18n'
+import { getSortedPosts} from '@/utils/content'
+
+// const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+// const posts = await getSortedPosts(lang)
+
+// interface Props {
+//   posts: CollectionEntry<'posts'>[]
+// }
+
+// const posts = allSortedPosts.filter((post) => {
+//   if (post.data.draft) return false
+//   if (lang === defaultLang) {
+//     return !post.id.includes('/')
+//   }
+//   return post.id.startsWith(`${lang}/`)
+// })
+
+// const { posts } = Astro.props
 
 interface Props {
   posts: CollectionEntry<'posts'>[]

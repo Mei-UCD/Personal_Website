@@ -1,10 +1,6 @@
 {
   "site": {
     "url": "https://blog-86d.pages.dev",
-    "title": "Mei's Blog",
-    "description": "this is a personal website",
-    "keywords": "blog",
-    "lang": "zh-CN",
     "favicon": "/me.ico",
     "appleTouchIcon": "/apple-touch-icon.png"
   },
@@ -15,8 +11,6 @@
   },
   "hero": {
     "name": "Mei",
-    "bio": "A Designer・AI Developer.",
-    "description": "Curious, Creative, Multidisciplinary.",
     "socials": [
       {
         "name": "Github",
@@ -36,8 +30,7 @@
         "url": "mailto:yuanmei1210@gmail.com",
         "color": "rgb(212, 70, 56)"
       }
-    ],
-    "yiyan": "Don't let your dreams be dreams."
+    ]
   },
   "color": {
     "accent": [
@@ -66,32 +59,26 @@
   },
   "menus": [
     {
-      "name": "首页",
       "link": "/",
       "icon": "icon-pantone"
     },
     {
-      "name": "归档",
       "link": "/archives",
       "icon": "icon-archive"
     },
     {
-      "name": "项目",
       "link": "/projects",
       "icon": "icon-flask"
     },
     {
-      "name": "时光廊",
       "link": "/gallery",
       "icon": "icon-instagram"
     },
     {
-      "name": "关于",
       "link": "/about",
       "icon": "icon-ghost"
     },
     {
-      "name": "友链",
       "link": "/friends",
       "icon": "icon-hearts"
     }
@@ -103,7 +90,7 @@
     "startTime": "2025-11-10T00:00:00Z"
   },
   "waline": {
-    "serverURL": "https://waline.lxchapu.com"
+    "serverURL": "https://waline-test-iota-murex.vercel.app"
   },
   "sponsor": {
     "wechat": "/images/apple-touch-icon.png"

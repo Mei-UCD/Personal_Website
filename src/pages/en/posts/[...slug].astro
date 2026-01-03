@@ -1,0 +1,153 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import type { GetStaticPaths } from 'astro'
+import MarkdownLayout from '@/layouts/MarkdownLayout.astro'
+import { getSortedPosts } from '@/utils/content'
+import MarkdownWrapper from '@/components/MarkdownWrapper.astro'
+import SectionBlock from '@/components/SectionBlock.astro'
+import { PostToc } from '@/components/post/PostToc'
+import PostMetaInfo from '@/components/post/PostMetaInfo.astro'
+import PostArchiveInfo from '@/components/post/PostArchiveInfo.astro'
+import { ReadingProgress } from '@/components/post/ReadingProgress'
+import { Outdate } from '@/components/post/Outdate'
+import PostNav from '@/components/post/PostNav.astro'
+import { Comments } from '@/components/comment'
+import { ActionAside } from '@/components/post/ActionAside'
+import { PostCopyright } from '@/components/post/PostCopyright'
+import { languages } from '@/utils/i18n'
+import { getLangFromPath, getTranslations, defaultLang, getLocalizedPath, getPostSlug } from '@/utils/i18n'
+
+
+// export const getStaticPaths = (async () => {
+//   const sortedPosts = await getSortedPosts('en')
+
+//   const paths: Array<{
+//     params: { slug: string }
+//     props: {
+//       current: CollectionEntry<'posts'>
+//       prev?: CollectionEntry<'posts'>
+//       next?: CollectionEntry<'posts'>
+//     }
+//     locale?: string
+//   }> = []
+
+//   // Generate paths for each locale
+//   for (const locale of languages) {
+//     for (let index = 0; index < sortedPosts.length; index++) {
+//       const post = sortedPosts[index]
+//       paths.push({
+//         params: { slug: post.slug },
+//         props: {
+//           current: post,
+//           prev: index > 0 ? sortedPosts[index - 1] : undefined,
+//           next: index < sortedPosts.length - 1 ? sortedPosts[index + 1] : undefined,
+//         },
+//         locale,
+//       })
+//     }
+//   }
+
+//   return paths
+// }) satisfies GetStaticPaths
+export const getStaticPaths = (async () => {
+  const posts = await getSortedPosts('en')
+
+  return posts.map((post, index) => ({
+    params: {
+      slug: post.slug.replace(/^en\//, ''),
+    },
+    props: {
+      current: post,
+      prev: index > 0 ? posts[index - 1] : undefined,
+      next: index < posts.length - 1 ? posts[index + 1] : undefined,
+    },
+  }))
+}) satisfies GetStaticPaths
+
+
+interface Props {
+  current: CollectionEntry<'posts'>
+  prev?: CollectionEntry<'posts'>
+  next?: CollectionEntry<'posts'>
+}
+
+const { current, prev, next } = Astro.props
+
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
+
+const { headings, Content, remarkPluginFrontmatter } = await current.render()
+
+//const mdSlug = `/posts/${current.slug}`
+const mdSlug = getLocalizedPath(`/posts/${getPostSlug(current.slug)}`, lang)
+
+const mdDescription = concat(current.data.category || '', current.data.tags.join(', '))
+
+function concat(str1: string, str2: string, sep = ' / ') {
+  if (str1 && str2) return str1 + sep + str2
+  if (str1) return str1
+  if (str2) return str2
+  return ''
+}
+
+const lastMod = current.data.lastMod || current.data.date
+---
+
+<MarkdownLayout
+  title={current.data.title}
+  description={current.data.summary}
+  image={current.data.cover}
+  mdTitle={current.data.title}
+  mdDescription={mdDescription}
+  mdSlug={mdSlug}
+>
+  <div
+    class="max-w-[1100px] mx-auto px-4 md:px-8 py-16 grid lg:grid-cols-[auto_260px] gap-8"
+    data-pagefind-body
+  >
+    <div>
+      <header class="space-y-4">
+        <h1 class="text-4xl font-bold text-center">
+          {current.data.title}
+        </h1>
+        <PostMetaInfo
+          class="justify-center"
+          date={current.data.date}
+          lastMod={current.data.lastMod}
+          words={remarkPluginFrontmatter.words}
+          readingMinutes={remarkPluginFrontmatter.readingMinutes}
+        />
+        <PostArchiveInfo
+          class="justify-center"
+          category={current.data.category}
+          tags={current.data.tags}
+        />
+        <div>
+          <Outdate lastMod={lastMod} t={t} client:idle />
+        </div>
+      </header>
+    </div>
+    <div class="col-start-1 min-w-0">
+      <MarkdownWrapper>
+        <Content />
+      </MarkdownWrapper>
+    </div>
+    <div class="hidden lg:block" data-pagefind-ignore>
+      <aside class="sticky top-20">
+        <SectionBlock title={t.post.toc}>
+          <PostToc headings={headings} client:idle />
+          <hr class="my-2 border-primary max-w-[100px]" />
+          <ReadingProgress label={t.post.progress} client:idle />
+        </SectionBlock>
+        <ActionAside lang={lang} client:idle />
+      </aside>
+    </div>
+    <div data-pagefind-ignore>
+      <section class="space-y-6">
+        <PostCopyright title={current.data.title} slug={mdSlug} lastMod={lastMod} lang={lang} client:visible />
+        <PostNav prev={prev} next={next} />
+        {current.data.comments && <Comments />}
+      </section>
+    </div>
+  </div>
+</MarkdownLayout>

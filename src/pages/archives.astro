@@ -4,19 +4,22 @@ import Highlight from '@/components/Highlight.astro'
 import PageLayout from '@/layouts/PageLayout.astro'
 import { getOldestPosts } from '@/utils/content'
 import { TimelineProgress } from '@/components/TimelineProgress'
+import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
 
-const oldestPosts = await getOldestPosts()
+const oldestPosts = await getOldestPosts('zh')
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
 ---
 
-<PageLayout title="归档">
+<PageLayout title={t.pages.archives}>
   <div class="max-w-[800px] mx-auto px-4 py-16">
     <header class="space-y-4 mb-8">
       <h1 class="text-4xl font-bold">
-        <Highlight>归档</Highlight>
+        <Highlight>{t.pages.archives}</Highlight>
       </h1>
-      <p>共产出 {oldestPosts.length} 篇文章，再接再厉。</p>
+      <p>{t.pages.archivesDescription.replace('{count}', oldestPosts.length.toString())}</p>
       <hr class="w-[100px] border-primary" />
-      <TimelineProgress client:load />
+      <TimelineProgress t={t} client:load />
     </header>
     <Timeline posts={oldestPosts} />
   </div>

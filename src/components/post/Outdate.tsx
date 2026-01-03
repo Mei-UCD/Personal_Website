@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react'
 import { getDiffInDays, getFormattedDate } from '@/utils/date'
 import { motion, AnimatePresence } from 'framer-motion'
+import type { translations } from '@/utils/i18n'
+type T = (typeof translations)['zh']
+import { getTranslations, getLangFromPath, defaultLang } from '@/utils/i18n'
 
-export function Outdate({ lastMod }: { lastMod: Date }) {
+
+
+export function Outdate({ lastMod, t }: { lastMod: Date, t: T }) {
   const [isShow, setIsShow] = useState(false)
 
   useEffect(() => {
@@ -22,8 +27,7 @@ export function Outdate({ lastMod }: { lastMod: Date }) {
           exit={{ opacity: 0 }}
         >
           <span>
-            这篇文章最后修改于 {getFormattedDate(lastMod)}
-            ，部分内容可能已经不适用，如有疑问可联系作者。
+          {t.date.notice.replace('{{date}}', getFormattedDate(lastMod, t))}
           </span>
         </motion.div>
       )}

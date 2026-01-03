@@ -4,18 +4,35 @@ import PageLayout from '@/layouts/PageLayout.astro'
 import { getAllCategories, getOldestPosts, slugify } from '@/utils/content'
 import Highlight from '@/components/Highlight.astro'
 import Timeline from '@/components/Timeline.astro'
+import { languages } from '@/utils/i18n'
+import { getLangFromPath, getTranslations, defaultLang, type Lang } from '@/utils/i18n'
+
+const lang = (getLangFromPath(Astro.url.pathname) ?? defaultLang) as Lang
+const t = getTranslations(lang)
 
 export const getStaticPaths = (async () => {
-  const allCategories = await getAllCategories()
+  const allCategories = await getAllCategories('zh')
 
-  return allCategories.map((category) => {
-    return {
-      params: {
-        category: category.slug,
-      },
-      props: { category },
+  const paths: Array<{
+    params: { category: string }
+    props: { category: { name: string; slug: string; count: number } }
+    locale?: string
+  }> = []
+
+  // Generate paths for each locale
+  for (const locale of languages) {
+    for (const category of allCategories) {
+      paths.push({
+        params: {
+          category: category.slug,
+        },
+        props: { category },
+        locale,
+      })
     }
-  })
+  }
+
+  return paths
 }) satisfies GetStaticPaths
 
 interface Props {
@@ -28,18 +45,21 @@ interface Props {
 
 const { category } = Astro.props
 
-const oldestPosts = await getOldestPosts().then((posts) => {
+const oldestPosts = await getOldestPosts('zh').then((posts) => {
   return posts.filter((post) => post.data.category && slugify(post.data.category) === category.slug)
 })
 ---
 
-<PageLayout title={`分类 · ${category.name}`}>
+<PageLayout title={`${t.categories.title} · ${category.name}`}>
   <div class="max-w-[800px] mx-auto px-4 py-16">
     <header class="space-y-4 mb-8">
       <h1 class="text-4xl font-bold">
-        分类：<Highlight>{category.name}</Highlight>
+        {t.categories.prefix}
+        <Highlight>{category.name}</Highlight>
       </h1>
-      <p>共有 {category.count} 篇文章。</p>
+      <p>
+        {t.categories.count.replace('{count}', `${category.count}`)}
+      </p>
     </header>
     <Timeline posts={oldestPosts} />
   </div>

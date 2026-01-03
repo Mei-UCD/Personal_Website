@@ -1,14 +1,18 @@
 import type { APIContext } from 'astro'
 import rss from '@astrojs/rss'
-import { site } from '@/config.json'
 import { getSortedPosts } from '@/utils/content'
+import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
 
 export async function GET(context: APIContext) {
   const sortedPosts = await getSortedPosts()
 
+  const url = new URL(context.request.url)
+  const lang = getLangFromPath(url.pathname) ?? defaultLang
+  const t = getTranslations(lang as 'zh' | 'en')
+
   return rss({
-    title: site.title,
-    description: site.description,
+    title: t.site.title,
+    description: t.site.description,
     site: context.site!,
     items: sortedPosts.map((post) => ({
       link: `/posts/${post.slug}`,
@@ -16,6 +20,6 @@ export async function GET(context: APIContext) {
       pubDate: post.data.date,
       description: post.data.summary,
     })),
-    customData: `<language>${site.lang}</language>`,
+    customData: `<language>${lang === 'en' ? 'en' : 'zh-CN'}</language>`,
   })
 }

@@ -44,6 +44,7 @@ const specCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     comments: z.boolean().default(true),
+    lang: z.enum(['zh', 'en']),
   }),
 })
 

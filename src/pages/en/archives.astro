@@ -1,0 +1,25 @@
+---
+import Timeline from '@/components/Timeline.astro'
+import Highlight from '@/components/Highlight.astro'
+import PageLayout from '@/layouts/PageLayout.astro'
+import { getOldestPosts } from '@/utils/content'
+import { TimelineProgress } from '@/components/TimelineProgress'
+import { getTranslations } from '@/utils/i18n'
+
+const oldestPosts = await getOldestPosts('en')
+const t = getTranslations('en')
+---
+
+<PageLayout title={t.pages.archives}>
+  <div class="max-w-[800px] mx-auto px-4 py-16">
+    <header class="space-y-4 mb-8">
+      <h1 class="text-4xl font-bold">
+        <Highlight>{t.pages.archives}</Highlight>
+      </h1>
+      <p>{t.pages.archivesDescription.replace('{count}', oldestPosts.length.toString())}</p>
+      <hr class="w-[100px] border-primary" />
+      <TimelineProgress client:load t={t} />
+    </header>
+    <Timeline posts={oldestPosts} />
+  </div>
+</PageLayout>

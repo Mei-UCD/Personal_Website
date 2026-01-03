@@ -1,4 +1,6 @@
 ---
+import { getLangFromPath, getTranslations, getLocalizedPath, defaultLang } from '@/utils/i18n'
+
 interface Props {
   categories: {
     name: string
@@ -8,6 +10,7 @@ interface Props {
 }
 
 const { categories } = Astro.props
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
 ---
 
 {
@@ -16,7 +19,7 @@ const { categories } = Astro.props
   ) : (
     <div class="space-y-2.5">
       {categories.map((category) => (
-        <a class="relative block group" href={`/categories/${category.slug}`}>
+        <a class="relative block group" href={getLocalizedPath(`/categories/${category.slug}`, lang)}>
           <div class="absolute -z-1 inset-0 rounded-lg bg-accent/10 group-hover:transition group-hover:bg-accent/20 group-hover:scale-105" />
           <div class="px-2.5 py-2 text-sm flex gap-1 select-none">
             <i class="shrink-0 iconfont icon-folder" />

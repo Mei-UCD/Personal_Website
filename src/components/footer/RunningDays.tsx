@@ -2,7 +2,16 @@ import { useLayoutEffect, useState } from 'react'
 import { footer } from '@/config.json'
 import { getDiffInDays } from '@/utils/date'
 
-export function RunningDays() {
+type Props = {
+  t: {
+    footer: {
+      notPublished: string
+      runningDays: string
+    }
+  }
+}
+
+export function RunningDays({ t }: Props) {
   const [days, setDays] = useState(0)
 
   useLayoutEffect(() => {
@@ -11,8 +20,10 @@ export function RunningDays() {
   }, [])
 
   if (days < 0) {
-    return <span>Ops! 网站还没有发布</span>
+    return <span>{t.footer.notPublished}</span>
   }
 
-  return <span>已经运行了 {days} 天</span>
+  return <span>
+    {t.footer.runningDays.replace('{{days}}', String(days))}
+  </span>
 }

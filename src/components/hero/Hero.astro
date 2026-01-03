@@ -2,6 +2,11 @@
 import { hero, author } from '@/config.json'
 import { SocialList } from './SocialList'
 import Highlight from '@/components/Highlight.astro'
+import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
+
+//const lang = Astro.locale || defaultLang
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang as 'zh' | 'en')
 ---
 
 <div class="lg:-mt-16 lg:h-dvh lg:min-h-[720px]">
@@ -10,9 +15,9 @@ import Highlight from '@/components/Highlight.astro'
   >
     <div class="mt-[120px] lg:mt-0 max-w-[590px]">
       <h1 class="text-3xl text-center lg:text-left text-balance">
-        Hi there, I'm <Highlight class="font-bold">{hero.name}</Highlight>👋<br />{hero.bio}
+        Hi there, I'm <Highlight class="font-bold">{hero.name}</Highlight>👋<br />{t.hero.bio}
       </h1>
-      <div class="text-sm text-secondary mt-3 text-center lg:text-left">{hero.description}</div>
+      <div class="text-sm text-secondary mt-3 text-center lg:text-left">{t.hero.description}</div>
       <SocialList className="mt-[60px]" client:load />
     </div>
 
@@ -40,7 +45,7 @@ import Highlight from '@/components/Highlight.astro'
 
     <div class="mt-10 lg:mt-0 lg:absolute inset-x-0 bottom-0 flex flex-col items-center">
       <p class="text-xs text-center text-balance text-secondary">
-        {hero.yiyan}
+        {t.hero.yiyan}
       </p>
       <div class="mt-7 text-xl animate-bounce">
         <i class="iconfont icon-down"></i>

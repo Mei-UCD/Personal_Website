@@ -1,8 +1,9 @@
 import { menus } from '@/config.json'
-import { createContext, useContext, useState, forwardRef } from 'react'
+import { createContext, useContext, useState, forwardRef, useEffect } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { motion, AnimatePresence } from 'framer-motion'
 import clsx from 'clsx'
+import { getLangFromPath, getMenuWithLang, type Lang } from '@/utils/i18n'
 
 const contentVariants = {
   hidden: {
@@ -101,11 +102,21 @@ const TriggerButton = forwardRef<HTMLButtonElement>((props, ref) => {
 
 function DrawerContentImpl() {
   const { dismiss } = useContext(DrawerContext)
+  const [lang, setLang] = useState<Lang>('zh')
+  const [localizedMenus, setLocalizedMenus] = useState(() =>
+    getMenuWithLang(menus, getLangFromPath(window.location.pathname))
+  )
+
+  useEffect(() => {
+    const currentLang = getLangFromPath(window.location.pathname)
+    setLang(currentLang)
+    setLocalizedMenus(getMenuWithLang(menus, currentLang))
+  }, [])
 
   return (
     <ul className="mt-8 pb-8 overflow-y-auto overflow-x-hidden min-h-0">
-      {menus.map((menu) => (
-        <motion.li key={menu.name} variants={menuItemVariants}>
+      {localizedMenus.map((menu) => (
+        <motion.li key={menu.link} variants={menuItemVariants}>
           <a className="inline-flex p-2 space-x-4" href={menu.link} onClick={dismiss}>
             <i className={clsx('iconfont', menu.icon)}></i>
             <span>{menu.name}</span>

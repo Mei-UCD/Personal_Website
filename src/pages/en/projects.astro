@@ -1,0 +1,23 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import Highlight from '@/components/Highlight.astro'
+import ProjectsByCategory from '@/components/ProjectList.astro'
+import { getCollection } from 'astro:content'
+import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
+
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang as 'zh' | 'en')
+
+const projects = await getCollection('projects')
+---
+<PageLayout title={t.projects.title}>
+  <div class="max-w-[800px] mx-auto px-4 py-16">
+    <header class="space-y-4 mb-10">
+      <h1 class="text-4xl font-bold">
+        <Highlight>{t.projects.title}</Highlight>
+      </h1>
+    </header>
+
+    <ProjectsByCategory projects={projects} t={t} />
+  </div>
+</PageLayout>

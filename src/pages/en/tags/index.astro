@@ -1,0 +1,27 @@
+---
+import TagList from '@/components/TagList.astro'
+import Highlight from '@/components/Highlight.astro'
+import { getAllTags } from '@/utils/content'
+import PageLayout from '@/layouts/PageLayout.astro'
+import { getLangFromPath, getTranslations, defaultLang, type Lang } from '@/utils/i18n'
+
+const lang = (getLangFromPath(Astro.url.pathname) ?? defaultLang) as Lang
+const t = getTranslations(lang)
+
+const allTags = await getAllTags(lang)
+---
+
+<PageLayout title={t.tags.title}>
+  <div class="max-w-[800px] mx-auto px-4 py-16">
+    <header class="space-y-4 mb-8">
+      <h1 class="text-4xl font-bold">
+        <Highlight>{t.tags.cloud}</Highlight>
+      </h1>
+      <p>
+        {t.tags.tagsCount.replace('{count}', `${allTags.length}`)}
+      </p>
+    </header>
+
+    <TagList tags={allTags} />
+  </div>
+</PageLayout>

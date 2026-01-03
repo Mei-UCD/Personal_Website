@@ -1,8 +1,26 @@
----
+<!-- ---
 import { Waline } from './Waline'
 import { waline } from '@/config.json'
 ---
 
 <div>
   {waline.serverURL && <Waline {...waline} client:visible />}
+</div> -->
+
+---
+import {Waline} from './Waline'
+import { waline } from '@/config.json'
+import { getLangFromPath, defaultLang } from '@/utils/i18n'
+
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+---
+
+<div>
+  {waline.serverURL && (
+    <Waline
+      serverURL={waline.serverURL}
+      lang={lang}
+      client:visible
+    />
+  )}
 </div>

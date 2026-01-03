@@ -6,33 +6,35 @@ import { metaSlugAtom, metaTitleAtom } from '@/store/metaInfo'
 import clsx from 'clsx'
 import { toast } from 'react-toastify'
 import { useModal } from '@/components/ui/modal'
+import { useState, useEffect } from 'react'
+import { getLangFromPath, getTranslations, type Lang } from '@/utils/i18n'
 
 interface ShareData {
   url: string
   text: string
 }
 
-const shareList = [
+const getShareList = (t: ReturnType<typeof getTranslations>) => [
   {
     name: 'Twitter',
     icon: 'icon-x',
-    onClick: (data: ShareData) => {
+    onClick: ({ url, text }: ShareData) => {
       window.open(
-        `https://twitter.com/intent/tweet?url=${encodeURIComponent(data.url)}&text=${encodeURIComponent(data.text)}&via=${encodeURIComponent(site.title)}`,
+        `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
       )
     },
   },
   {
-    name: '复制链接',
+    name: t.actions.share.copy,
     icon: 'icon-link',
-    onClick: (data: ShareData) => {
-      navigator.clipboard.writeText(data.url)
-      toast.success('已复制到剪贴板')
+    onClick: ({ url }: ShareData) => {
+      navigator.clipboard.writeText(url)
+      toast.success(t.actions.share.copied)
     },
   },
 ]
 
-export function ActionAside() {
+export function ActionAside({ lang }: { lang: Lang }) {
   return (
     <div
       className="absolute left-0 bottom-0 flex flex-col gap-4"
@@ -40,23 +42,26 @@ export function ActionAside() {
         transform: 'translateY(calc(100% + 24px))',
       }}
     >
-      <ShareButton />
-      <DonateButton />
+    {/* <div className="sticky top-[calc(100vh-200px)] flex flex-col gap-4"> */}
+      <ShareButton lang={lang} />
+      <DonateButton lang={lang} />
     </div>
   )
 }
 
-function ShareButton() {
+function ShareButton({ lang }: { lang: Lang }) {
   const postSlug = useAtomValue(metaSlugAtom)
   const postTitle = useAtomValue(metaTitleAtom)
   const { present } = useModal()
 
+  const t = getTranslations(lang)
+
   const url = new URL(postSlug, site.url).href
-  const text = `嘿，我发现了一片宝藏文章「${postTitle}」哩，快来看看吧！`
+  const text = t.actions.share.text.replace('{{title}}', postTitle)
 
   const openModal = () => {
     present({
-      content: <ShareModal url={url} text={text} />,
+      content: <ShareModal url={url} text={text} t={t} />,
     })
   }
 
@@ -72,7 +77,8 @@ function ShareButton() {
   )
 }
 
-function ShareModal({ url, text }: { url: string; text: string }) {
+function ShareModal({ url, text, t }: { url: string; text: string, t: ReturnType<typeof getTranslations> }) {
+  const shareList = getShareList(t)
   return (
     <motion.div
       className="bg-primary rounded-lg p-2 min-w-[420px] border border-primary flex flex-col"
@@ -80,12 +86,12 @@ function ShareModal({ url, text }: { url: string; text: string }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
     >
-      <h2 className="px-3 py-1 font-bold">分享此内容</h2>
+      <h2 className="px-3 py-1 font-bold">{t.actions.share.title}</h2>
       <hr className="my-2 border-primary" />
       <div className="px-3 py-2 grid grid-cols-[180px_auto] gap-3">
         <QR.QRCodeSVG value={url} size={180} />
         <div className="flex flex-col gap-2">
-          <div className="text-sm">分享到...</div>
+          <div className="text-sm">{t.actions.share.to}</div>
           <ul className="flex flex-col gap-2">
             {shareList.map((item) => (
               <li
@@ -106,12 +112,14 @@ function ShareModal({ url, text }: { url: string; text: string }) {
   )
 }
 
-function DonateButton() {
+function DonateButton({ lang }: { lang: Lang }) {
   const { present } = useModal()
+
+  const t = getTranslations(lang)
 
   const openDonate = () => {
     present({
-      content: <DonateContent />,
+      content: <DonateContent t={t} />,
     })
   }
 
@@ -127,21 +135,21 @@ function DonateButton() {
   )
 }
 
-function DonateContent() {
+function DonateContent({ t }: { t: ReturnType<typeof getTranslations> }) {
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 20, opacity: 0 }}
     >
-      <h2 className="text-center mb-5">感谢您的支持，这将成为我前进的最大动力。</h2>
+      <h2 className="text-center mb-5">{t.actions.donate.thanks}</h2>
       <div className="flex flex-wrap gap-4 justify-center">
         <img
           className="object-cover"
           width={300}
           height={300}
           src={sponsor.wechat}
-          alt="微信赞赏码"
+          alt={t.actions.donate.wechatAlt}
           loading="lazy"
           decoding="async"
         />

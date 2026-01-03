@@ -2,7 +2,24 @@ import { useEffect, useRef, useState } from 'react'
 import { animate } from 'framer-motion'
 import { getDaysInYear, getDiffInDays, getStartOfDay, getStartOfYear } from '@/utils/date'
 
-export function TimelineProgress() {
+
+type Props = {
+  t: {
+    timeline: {
+      dayOfYear: string
+      percentOfYear: {
+        prefix: string,
+        suffix: string
+      }
+      percentOfToday: {
+        prefix: string,
+        suffix: string
+      }
+    }
+  }
+}
+
+export function TimelineProgress({ t }: Props) {
   const [currentYear, setCurrentYear] = useState(0)
   const [dayOfYear, setDayOfYear] = useState(0)
   const [percentOfYear, setPercentOfYear] = useState(0)
@@ -31,13 +48,19 @@ export function TimelineProgress() {
   return (
     <>
       <p className="mt-4">
-        今天是 {currentYear} 年的第 <CountUp to={dayOfYear} decimals={0} /> 天
+        {t.timeline.dayOfYear
+          .replace('{year}', currentYear.toString())
+          .replace('{day}', dayOfYear.toString())}
       </p>
       <p className="mt-4">
-        今年已过 <CountUp to={percentOfYear} decimals={5} />%
+      {t.timeline.percentOfYear.prefix}
+      <CountUp to={percentOfYear} decimals={5} />
+      {t.timeline.percentOfYear.suffix}
       </p>
       <p className="mt-4">
-        今天已过 <CountUp to={percentOfToday} decimals={5} />%
+      {t.timeline.percentOfToday.prefix}
+      <CountUp to={percentOfToday} decimals={5} />
+      {t.timeline.percentOfToday.suffix}
       </p>
     </>
   )

@@ -9,8 +9,8 @@ import {
 import { BackToTopFAB } from '@/components/BackToTopFAB'
 import { ToastContainer } from '@/components/ToastContainer'
 import { ModalStack } from '@/components/ui/modal'
-import { site } from '@/config.json'
 import '@/styles/global.css'
+import { getLangFromPath, defaultLang } from '@/utils/i18n'
 
 interface Props {
   title?: string
@@ -19,10 +19,13 @@ interface Props {
 }
 
 const { title, description, image } = Astro.props
+//const currentLang = Astro.locale || defaultLang
+const currentLang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const htmlLang = currentLang === 'en' ? 'en' : 'zh-CN'
 ---
 
 <!doctype html>
-<html lang={site.lang}>
+<html lang={htmlLang}>
   <head>
     <CommonHead title={title} description={description} image={image} />
     <WebAnalytics />
