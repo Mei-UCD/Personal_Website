@@ -4,11 +4,12 @@ import { getSortedPosts } from '@/utils/content'
 import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
 
 export async function GET(context: APIContext) {
-  const sortedPosts = await getSortedPosts()
 
   const url = new URL(context.request.url)
   const lang = getLangFromPath(url.pathname) ?? defaultLang
   const t = getTranslations(lang as 'zh' | 'en')
+
+  const sortedPosts = await getSortedPosts(lang)
 
   return rss({
     title: t.site.title,
