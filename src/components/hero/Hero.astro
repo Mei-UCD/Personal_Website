@@ -3,7 +3,7 @@ import { hero, author } from '@/config.json'
 import { SocialList } from './SocialList'
 import Highlight from '@/components/Highlight.astro'
 import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
-import { Particles } from "@/components/ui/Modal/particles";
+import { Particles } from "@/components/ui/modal/particles";
 
 //const lang = Astro.locale || defaultLang
 const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
