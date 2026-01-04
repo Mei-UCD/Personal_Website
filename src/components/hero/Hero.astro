@@ -3,6 +3,7 @@ import { hero, author } from '@/config.json'
 import { SocialList } from './SocialList'
 import Highlight from '@/components/Highlight.astro'
 import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
+import { Particles } from "@/components/ui/particles";
 
 //const lang = Astro.locale || defaultLang
 const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
@@ -10,6 +11,15 @@ const t = getTranslations(lang as 'zh' | 'en')
 ---
 
 <div class="lg:-mt-16 lg:h-dvh lg:min-h-[720px]">
+  <Particles
+    client:only="react"
+    className="absolute inset-0 -z-10"
+    quantity={150}
+    staticity={60}
+    ease={50}
+    size={0.8}
+    color="#000000"
+  />
   <div
     class="relative max-w-[1300px] mx-auto h-full px-4 grid lg:grid-cols-2 items-center justify-items-center"
   >
