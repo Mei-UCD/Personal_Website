@@ -90,7 +90,7 @@
     "startTime": "2025-11-10T00:00:00Z"
   },
   "waline": {
-    "serverURL": "https://waline-test-iota-murex.vercel.app"
+    "serverURL": "https://waline.neuimay.com"
   },
   "sponsor": {
     "wechat": "/images/apple-touch-icon.png"
@@ -101,8 +101,8 @@
       "measurementId": ""
     },
     "umami": {
-      "serverUrl": "",
-      "websiteId": ""
+      "serverUrl": "https://umami.neuimay.com",
+      "websiteId": "f1d758fb-46ff-46af-88a9-b0edf48e74fd"
     },
     "microsoftClarity": {
       "projectId": ""
