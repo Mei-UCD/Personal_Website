@@ -96,7 +96,7 @@
     "wechat": "/images/apple-touch-icon.png"
   },
   "analytics": {
-    "enable": false,
+    "enable": true,
     "google": {
       "measurementId": ""
     },
