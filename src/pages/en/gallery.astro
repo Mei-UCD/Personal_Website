@@ -7,6 +7,14 @@ import TravelMap from '@/components/gallery/TravelMap'
 import travelData from '@/gallery.json'
 import Highlight from '@/components/Highlight.astro'
 import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
+import { kyotoImages } from '@/data/kyoto'
+import { tokyoImages } from '@/data/tokyo'
+
+
+
+const IMAGE_BASE = 'https://img.neuimay.com/blog/Kyoto'
+
+const IMAGE_BASE_tokyo = 'https://img.neuimay.com/blog/Tokyo'
 
 interface Props {
   title?: string
@@ -24,40 +32,48 @@ const { description, image } = Astro.props
   <Provider pathName={Astro.url.pathname} client:only="react" />
 
   <Header client:only="react" />
-  <!-- <main class="relative z-1 pt-16 min-h-main bg-primary">
-    <div class="swup-transition-fade">
-      <h1 class="text-3xl font-bold mb-4">{title}</h1>
-      <TravelMap travelData={travelData} client:only="react" />
-      <h1 class="text-3xl font-bold mb-4">旅行足迹</h1>
-      <h1 class="text-3xl font-bold mb-4">旅行足迹</h1>
-      <h1 class="text-3xl font-bold mb-4">旅行足迹</h1>
-      <slot />
-    </div>
-  </main> -->
   <main class="relative z-1 pt-16 min-h-main bg-primary">
     <div class="swup-transition-fade max-w-[800px] mx-auto px-4 py-16 space-y-8">
-      <!-- 页面标题和描述 -->
       <header class="space-y-4">
         <h1 class="text-4xl font-bold">
           <Highlight>{title}</Highlight>
         </h1>
       </header>
 
-      <!-- TravelMap 组件 -->
-      <!-- <div data-swup-ignore>
-        <TravelMap travelData={travelData} client:only="react" />
-      </div> -->
-
-      <!-- 你可以在这里添加其他时光廊内容 -->
-      <section class="timeline mt-12 space-y-8">
-        <div class="timeline-item">
-          <h2 class="text-2xl font-semibold">{t.gallery.content}</h2>
-          <!-- <p>建设中</p> -->
+      <section class="mt-16">
+        <!-- <h2 class="text-2xl font-semibold mb-6">
+          Kyoto
+        </h2> -->   
+        <div class="masonry">
+          {kyotoImages.map((img) => (
+            <div class="masonry-item">
+              <img
+                src={`${IMAGE_BASE}/${img}`}
+                alt="Kyoto photography"
+                loading="lazy"
+                decoding="async"
+                class="lazy-img"
+              />
+            </div>
+          ))}
         </div>
-        <!-- <div class="timeline-item">
-          <h2 class="text-2xl font-semibold">2025年2月</h2>
-          <p>更多内容...</p>
-        </div> -->
+
+        <div class="masonry">
+          {tokyoImages.map((img) => (
+            <div class="masonry-item">
+              <img
+                src={`${IMAGE_BASE_tokyo}/${img}`}
+                alt="Tokyo photography"
+                loading="lazy"
+                decoding="async"
+                class="lazy-img"
+              />
+            </div>
+          ))}
+        </div>
+
+
+
       </section>
 
       <slot />
@@ -65,3 +81,25 @@ const { description, image } = Astro.props
   </main>
   <Footer />
 </Layout>
+
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll<HTMLImageElement>('.lazy-img');
+
+    images.forEach((img) => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
+      }
+    });
+  });
+</script>
+

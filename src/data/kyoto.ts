@@ -1,0 +1,17 @@
+export const kyotoImages = [
+  'IMG_0872.jpeg',
+  'IMG_0892.jpeg',
+  'IMG_0896.jpeg',
+  'IMG_0925.jpeg',
+  'IMG_0949.jpeg',
+  'IMG_0956.jpeg',
+  'IMG_0972.jpeg',
+  'IMG_0974.jpeg',
+  'IMG_0981.jpeg',
+  'IMG_0984.jpeg',
+  'IMG_0994.jpeg',
+  'IMG_1001.jpeg',
+  'IMG_1027.jpeg',
+  'IMG_1122.jpeg',
+  'IMG_1124.jpeg',
+]
