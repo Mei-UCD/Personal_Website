@@ -20,8 +20,7 @@ This site started from an open-source Astro template and has been **significantl
 - 🎨 Designing custom layouts and visual effects  
 - 🖼️ Implementing a photo gallery  
 
-Rather than building everything from scratch, this project reflects how modern web development often works in practice:  
-**starting from a solid foundation and iterating with clear design and technical goals**.
+Rather than building everything from scratch, this project reflects how modern web development often works in practice: **starting from a solid foundation and iterating with clear design and technical goals**.
 
 ---
 
