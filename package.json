@@ -11,7 +11,8 @@
     "lint": "prettier --write .",
     "new-friend": "node scripts/new-friend.js",
     "new-post": "node scripts/new-post.js",
-    "new-project": "node scripts/new-project.js"
+    "new-project": "node scripts/new-project.js",
+    "generate:blur": "node scripts/generate-blur-map.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
@@ -47,6 +48,7 @@
     "rehype-katex": "^7.0.0",
     "remark-directive": "^3.0.0",
     "remark-math": "^6.0.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5",
     "unist-util-visit": "^5.0.0"

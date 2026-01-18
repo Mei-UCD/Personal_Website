@@ -1,0 +1,377 @@
+<!-- ---
+const locations = [
+  {
+    id: 'tokyo',
+    title: 'Tokyo',
+    date: '2025 · Spring',
+  },
+  {
+    id: 'kyoto',
+    title: 'Kyoto',
+    date: '2024 · Summer',
+  },
+]
+---
+
+<nav class="timeline">
+    <span class="timeline-label">Locations</span>
+    {locations.map(loc => (
+      <a href={`#${loc.id}`} class="timeline-item">
+        <span class="dot"></span>
+        <div class="content">
+          <h3>{loc.title}</h3>
+          <p class="date">{loc.date}</p>
+        </div>
+      </a>
+    ))}
+  </nav>
+  
+  <style>
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    border-left: 1px solid rgba(255,255,255,0.08);
+    padding-left: 16px;
+  }
+  
+  .timeline-item {
+    display: flex;
+    gap: 12px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.2s ease;
+  }
+  
+  .timeline-item:hover {
+    color: rgba(255,255,255,0.95);
+  }
+
+  .timeline-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.35;
+  margin-bottom: 24px;
+  display: block;
+}
+
+  
+  .dot {
+    width: 6px;
+    height: 6px;
+    margin-top: 6px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+  
+  .timeline-item:hover .dot {
+    background: white
+  }
+  
+  .content h3 {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  
+  .date {
+    font-size: 12px;
+    opacity: 0.6;
+  }
+  
+  .places {
+    font-size: 12px;
+    opacity: 0.4;
+  }
+  </style> -->
+
+
+
+---
+const locations = [
+  {
+    id: 'tokyo',
+    title: 'Tokyo',
+    date: '2025 · Spring',
+  },
+  {
+    id: 'shanghai',
+    title: 'Shanghai',
+    date: '2024 · Winter',
+  },
+  {
+    id: 'kyoto',
+    title: 'Kyoto',
+    date: '2024 · Summer',
+  },
+  {
+    id: 'leeds',
+    title: 'Leeds·York·Sheffield',
+    date: '2023 · Winter',
+  },
+  {
+    id: 'london',
+    title: 'London',
+    date: '2023 · Spring',
+  },
+  {
+    id: 'westport',
+    title: 'Westport',
+    date: '2022 · Winter',
+  },
+  {
+    id: 'galway',
+    title: 'Galway',
+    date: '2022 · Autumn',
+  },
+  {
+    id: 'dublin',
+    title: 'Dublin',
+    date: '2022 · 2023 · 2024',
+  },
+]
+---
+
+<div class="timeline-toggle">></div>
+<nav class="timeline">
+  <!-- label：自动主题色 -->
+  <span class="timeline-label text-accent">
+    Locations
+  </span>
+
+  {locations.map(loc => (
+    <a
+      href={`#${loc.id}`}
+      class="timeline-item group text-secondary"
+    >
+      <span class="dot"></span>
+
+      <div class="content">
+        <h3 class="title">
+          {loc.title}
+        </h3>
+
+        <p class="date text-secondary/70">
+          {loc.date}
+        </p>
+      </div>
+    </a>
+  ))}
+</nav>
+
+<style>
+/* =========================
+   Layout
+   ========================= */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-left: 16px;
+  border-left: 1px solid rgb(var(--color-border-primary) / 0.4);
+}
+
+/* =========================
+   Label
+   ========================= */
+
+.timeline-label {
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* =========================
+   Item
+   ========================= */
+
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* =========================
+   Dot
+   ========================= */
+
+.dot {
+  width: 6px;
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: rgb(var(--color-text-secondary) / 0.4);
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.timeline-item:hover .dot {
+  background: rgb(var(--color-accent));
+}
+
+/* =========================
+   Text
+   ========================= */
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+
+/* 👇 hover 时，标题变“主题主文字色” */
+.timeline-item:hover .title {
+  color: rgb(var(--color-accent));
+}
+
+.date {
+  font-size: 12px;
+}
+
+.timeline-item.is-active {
+  color: rgb(var(--color-accent));
+}
+
+.timeline-item.is-active .dot {
+  background: rgb(var(--color-accent));
+}
+
+.timeline-toggle {
+  display: none; /* 默认桌面端隐藏 */
+}
+
+
+
+
+@media (max-width: 768px) {
+  /* 按钮：固定在左侧，半透明 */
+  .timeline-toggle {
+    display: flex !important; /* 强制显示 */
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 24px;
+    font-weight: 300;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    z-index: 99999; /* 提高z-index */
+    transition: all 0.3s ease;
+    pointer-events: auto; /* 确保可点击 */
+  }
+
+  .timeline-toggle:hover {
+    background: rgba(0, 0, 0, 0.7);
+    color: rgba(255, 255, 255, 1);
+  }
+
+  /* Timeline：默认收起，半透明浮层 */
+  .timeline {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  background: rgba(0, 0, 0, 0.5); /* 修改：从 0.85 改为 0.5 或其他更低的值，比如 0.4 或 0.3 */
+  backdrop-filter: blur(20px);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  padding: 80px 24px 24px;
+  z-index: 99998 !important;
+  overflow-y: auto;
+  /* 隐藏滚动条但保持滚动功能 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 和 Edge */
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: auto;
+}
+
+  /* 展开状态 */
+  .timeline.open {
+    transform: translateX(0);
+  }
+
+  /* 按钮在展开时向右移动并改变符号 */
+  .timeline.open ~ .timeline-toggle {
+    left: 280px;
+    z-index: 99999; /* 保持最高 */
+  }
+  .timeline::-webkit-scrollbar {
+  display: none;
+}
+}
+
+
+
+</style>
+
+
+
+
+<script>
+    const sections = document.querySelectorAll('.gallery-section')
+    const items = document.querySelectorAll('.timeline-item')
+  
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return
+  
+          const id = entry.target.id
+  
+          items.forEach(item => {
+            item.classList.toggle(
+              'is-active',
+              item.getAttribute('href') === `#${id}`
+            )
+          })
+        })
+      },
+      {
+        rootMargin: '-40% 0px -50% 0px',
+        threshold: 0,
+      }
+    )
+  
+    sections.forEach(section => observer.observe(section))
+
+
+    const toggle = document.querySelector('.timeline-toggle')
+    const timeline = document.querySelector('.timeline')
+
+    if (toggle && timeline) {
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation()
+        timeline.classList.toggle('open')
+        toggle.textContent = timeline.classList.contains('open') ? '<' : '>'
+      })
+
+      document.addEventListener('click', (e) => {
+        if (timeline.classList.contains('open')) {
+          // 检查是否是 Element 或 Node
+          if (e.target instanceof Element) {
+            if (!timeline.contains(e.target) && !toggle.contains(e.target)) {
+              timeline.classList.remove('open')
+              toggle.textContent = '>'
+            }
+          }
+        }
+      })
+    }
+
+  </script>
+  
+  

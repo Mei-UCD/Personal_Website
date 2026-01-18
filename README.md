@@ -16,9 +16,9 @@
 
 This site started from an open-source Astro template and has been **significantly customized and extended**, including:
 
-- 🌐 Adding bilingual (EN / 中文) support  
-- 🎨 Designing custom layouts and visual effects  
-- 🖼️ Implementing a photo gallery  
+- 🌐 Adding bilingual (EN / 中文) support
+- 🎨 Designing custom layouts and visual effects
+- 🖼️ Implementing a photo gallery
 
 Rather than building everything from scratch, this project reflects how modern web development often works in practice: **starting from a solid foundation and iterating with clear design and technical goals**.
 
@@ -27,20 +27,24 @@ Rather than building everything from scratch, this project reflects how modern w
 ## ✨ Features
 
 ### 🌐 Content & Language
+
 - 🌍 Bilingual content support (English / Chinese)
 - 📝 Markdown-based posts with custom layouts
 - 🏷️ Tag, archive, and post navigation
 
 ### 🖼️ Gallery & Media
+
 - 📷 Photo gallery with responsive images
 - ☁️ Cloudflare R2 object storage integration
 
 ### 🎨 Design & Interaction
+
 - ✨ Custom background visual effects
 - 🎛️ Tailwind-based design system
 - ✒️ Refined typography and markdown styles
 
 ### ⚙️ Performance & Tooling
+
 - ⚡ Static-first architecture with Astro
 - 🚀 Deployed on Vercel
 - 📊 Umami analytics integration
@@ -56,4 +60,3 @@ Rather than building everything from scratch, this project reflects how modern w
 - ☁️ **Storage**: Cloudflare R2
 - 📊 **Analytics**: Umami
 - 🌍 **Deployment**: Vercel
-

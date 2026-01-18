@@ -3,18 +3,11 @@ import Layout from '@/layouts/Layout.astro'
 import { Header } from '@/components/header/Header'
 import Footer from '@/components/footer/Footer.astro'
 import { Provider } from '@/components/provider/Provider'
-import TravelMap from '@/components/gallery/TravelMap'
-import travelData from '@/gallery.json'
 import Highlight from '@/components/Highlight.astro'
 import { getLangFromPath, getTranslations, defaultLang } from '@/utils/i18n'
-import { kyotoImages } from '@/data/kyoto'
-import { tokyoImages } from '@/data/tokyo'
-
-
-
-const IMAGE_BASE = 'https://img.neuimay.com/blog/Kyoto'
-
-const IMAGE_BASE_tokyo = 'https://img.neuimay.com/blog/Tokyo'
+import GalleryGrid from '@/components/gallery/GalleryGrid.astro'
+import LocationTimeline from '@/components/gallery/LocationTimeLine.astro'
+import { GALLERIES } from '@/../scripts/gallery.config.js'
 
 interface Props {
   title?: string
@@ -30,76 +23,47 @@ const { description, image } = Astro.props
 
 <Layout title={title} description={description} image={image}>
   <Provider pathName={Astro.url.pathname} client:only="react" />
-
   <Header client:only="react" />
+
   <main class="relative z-1 pt-16 min-h-main bg-primary">
-    <div class="swup-transition-fade max-w-[800px] mx-auto px-4 py-16 space-y-8">
+    <div class="swup-transition-fade max-w-[1100px] mx-auto px-4 py-16">
+
+      <!-- Page title -->
       <header class="space-y-4">
         <h1 class="text-4xl font-bold">
           <Highlight>{title}</Highlight>
         </h1>
       </header>
 
-      <section class="mt-16">
-        <!-- <h2 class="text-2xl font-semibold mb-6">
-          Kyoto
-        </h2> -->   
-        <div class="masonry">
-          {kyotoImages.map((img) => (
-            <div class="masonry-item">
-              <img
-                src={`${IMAGE_BASE}/${img}`}
-                alt="Kyoto photography"
-                loading="lazy"
-                decoding="async"
-                class="lazy-img"
+      <!-- Gallery layout -->
+      <div class="gallery-layout  mt-16">
+
+        <!-- Left: location timeline -->
+        <aside class="gallery-nav">
+          <LocationTimeline />
+        </aside>
+
+        <!-- Right: gallery content -->
+        <section class="gallery-content">
+
+          {Object.entries(GALLERIES).map(([folder, images]) => (
+            <section id={folder.toLowerCase()} class="gallery-section">
+              <GalleryGrid
+                images={images}
+                folder={folder}
+                alt={`${folder} photography`}
               />
-            </div>
+            </section>
           ))}
-        </div>
-
-        <div class="masonry">
-          {tokyoImages.map((img) => (
-            <div class="masonry-item">
-              <img
-                src={`${IMAGE_BASE_tokyo}/${img}`}
-                alt="Tokyo photography"
-                loading="lazy"
-                decoding="async"
-                class="lazy-img"
-              />
-            </div>
-          ))}
-        </div>
 
 
 
-      </section>
+        </section>
+      </div>
 
       <slot />
     </div>
   </main>
+
   <Footer />
 </Layout>
-
-
-
-
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const images = document.querySelectorAll<HTMLImageElement>('.lazy-img');
-
-    images.forEach((img) => {
-      if (img.complete) {
-        img.classList.add('loaded');
-      } else {
-        img.addEventListener('load', () => {
-          img.classList.add('loaded');
-        });
-      }
-    });
-  });
-</script>
-
