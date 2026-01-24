@@ -66,7 +66,7 @@ html.gray {
 /* gallery */
 .gallery-layout {
   display: grid;
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 180px 1fr;
   gap: 48px;
 }
 
@@ -84,7 +84,7 @@ html.gray {
 
 .gallery-section {
   scroll-margin-top: 120px;
-  margin-bottom: 160px;
+  margin-bottom: 20px;
 }
 
 /* 2026-01-17 */
@@ -105,4 +105,8 @@ html.gray {
     position: relative; /* 允许设置 z-index */
     z-index: 1; /* 较低的 z-index */
   }
+}
+
+body.timeline-open {
+  overflow: hidden;
 }

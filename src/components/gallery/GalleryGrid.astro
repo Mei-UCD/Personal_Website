@@ -2,7 +2,7 @@
 import blurMap from '@/generated/blurMap.json'
 
 const typedBlurMap = blurMap as Record<string, string>
-const IMAGE_BASE = 'https://img.neuimay.com/blog'
+const IMAGE_BASE = 'https://img.neuimay.com/blog/gallery-grid'
 
 interface Props {
   folder: string
@@ -26,7 +26,7 @@ const {
       <div class="masonry-item">
         <div class="img-wrapper">
 
-          <img
+          {/* <img
             src={blur}
             alt=""
             aria-hidden="true"
@@ -39,7 +39,17 @@ const {
             loading="lazy"
             decoding="async"
             class="img-real"
+          /> */}
+
+          <img
+            src={blur}
+            data-src={`${IMAGE_BASE}/${folder}/${img}`}
+            alt={alt}
+            loading="lazy"
+            decoding="async"
+            class="img"
           />
+
 
         </div>
       </div>
@@ -50,7 +60,7 @@ const {
 
 
 
-<script>
+<!-- <script>
   // 视口懒加载：滚到哪里加载哪里
   const realImages = document.querySelectorAll('.img-real')
 
@@ -77,7 +87,23 @@ const {
   )
 
   realImages.forEach(img => observer.observe(img))
+</script> -->
+
+<script>
+  document.querySelectorAll<HTMLImageElement>('.img').forEach(img => {
+    const real = img.dataset.src
+    if (!real) return
+
+    const tmp = new Image()
+    tmp.src = real
+    tmp.onload = () => {
+      img.src = real
+      img.classList.add('loaded')
+    }
+  })
 </script>
+
+
 
   
   
@@ -127,5 +153,19 @@ const {
   .img-real.loaded {
     opacity: 1;
   }
+
+  .img {
+  width: 100%;
+  display: block;
+  filter: blur(20px);
+  transform: scale(1.05);
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.img.loaded {
+  filter: blur(0);
+  transform: scale(1);
+}
+
 
 </style>
