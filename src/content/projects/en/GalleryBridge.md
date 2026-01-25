@@ -188,7 +188,7 @@ The design goal was to satisfy both traffic and building load requirements while
   </div>
 </div>
 
-- Parametric modeling of the “fish-tail” structural component
+- Parametric modeling of the "fish-tail" structural component
 
 <div style="display:flex; flex-direction:column; align-items:center;">
   <img src="/images/GalleryBridge/鱼尾圆管1.jpg" alt="cad-pipe2" style="width:90%;">
@@ -211,4 +211,4 @@ The design goal was to satisfy both traffic and building load requirements while
   During construction, the BIM model was used for quantity takeoff and clash detection, successfully identifying interferences between steel structural joints and curtain wall systems, significantly improving on-site construction efficiency.
 
 - **Lessons Learned**:  
-  This project further deepened my understanding of the BIM engineer’s workflow and highlighted key considerations before modeling begins. Through hands-on practice, I strengthened my proficiency in Grasshopper-based parametric design. Overall, the project enhanced my capabilities in modeling complex architectural forms and coordinating design with construction, reinforcing the concept of integrated design and fabrication.
+  This project further deepened my understanding of the BIM engineer's workflow and highlighted key considerations before modeling begins. Through hands-on practice, I strengthened my proficiency in Grasshopper-based parametric design. Overall, the project enhanced my capabilities in modeling complex architectural forms and coordinating design with construction, reinforcing the concept of integrated design and fabrication.

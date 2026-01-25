@@ -9,7 +9,7 @@ category: DataScience
 
 **GitHub**: [View Repository](https://github.com/Mei-UCD/MachineLearning_TextClassification)
 
-This project is the final coursework for the _Machine Learning_ class during my master’s program.  
+This project is the final coursework for the _Machine Learning_ class during my master's program.  
 The goal is to predict the category of a news article based on its short description (`short_description`).  
 Through text preprocessing, feature extraction, and comparison between traditional machine learning models and deep learning models, the project ultimately builds a high-performing classification model.
 

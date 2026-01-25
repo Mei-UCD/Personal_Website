@@ -68,7 +68,7 @@ Although this was my first time using Revit in a real project, I gained valuable
 #### 2. **Curtain Wall Modeling in Revit**
 
 - Standardized modeling of glass mullions, transoms, stone panels, and aluminum panels was achieved through custom Revit families.
-- By leveraging Revit’s parametric capabilities, curtain wall dimensions, panel layouts, and structural details could be efficiently adjusted.
+- By leveraging Revit's parametric capabilities, curtain wall dimensions, panel layouts, and structural details could be efficiently adjusted.
 
 <div style="display:flex; gap:10px; justify-content:center; margin:10px 0; padding:0 5%;">
   <div style="flex:1; text-align:center;">

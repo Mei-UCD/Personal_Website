@@ -9,7 +9,7 @@ category: DataScience
 
 **GitHub**: [Visit Repository](https://github.com/Mei-UCD/Text_Sentimental_Analysis)
 
-This project is the final assignment of the **Artificial Intelligence** course during my master’s studies.  
+This project is the final assignment of the **Artificial Intelligence** course during my master's studies.  
 Its goal is to analyze the sentiment tendency (positive or negative) of movie review texts.
 
 Through text preprocessing, sentiment lexicon matching, and rule-based technical methods, sentiment scoring and statistical analysis of reviews are achieved.

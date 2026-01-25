@@ -7,7 +7,7 @@ lang: en
 
 ## How to Apply for a Friend Link?
 
-If you’d like to exchange friend links, feel free to submit a PR to this site’s  
+If you’d like to exchange friend links, feel free to submit a PR to this site's  
 [GitHub repository](https://github.com/lxchapu/astro-gyoza/tree/main/src/content/friends).
 
 Once the PR is reviewed and approved, your site will be displayed here 🎉

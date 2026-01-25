@@ -8,7 +8,7 @@ category: Architecture
 ### 🧭 Project Background
 
 The Coach Building and Bus Terminal at **Yancheng High-Speed Railway Station West Plaza** are located in **Tinghu District, Yancheng City, Jiangsu Province**.  
-The site is bounded by **Hebin Road** to the east, **Century Avenue** to the south, **Dongjin Road** to the north, and **Fangong Road** to the west, forming a key part of Yancheng’s integrated transportation hub.
+The site is bounded by **Hebin Road** to the east, **Century Avenue** to the south, **Dongjin Road** to the north, and **Fangong Road** to the west, forming a key part of Yancheng's integrated transportation hub.
 
 The project integrates long-distance passenger transport, urban bus facilities, and commercial service spaces, aiming to create a comprehensive transportation complex that combines transit, waiting, and commercial functions.
 

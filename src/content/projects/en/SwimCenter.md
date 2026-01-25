@@ -7,7 +7,7 @@ category: Architecture
 
 ### 🧭 Project Background
 
-This project focuses on the BIM model construction and construction support for the **Swimming Center** within the “Three Halls, One Arena, One Park” of the South City Olympic Sports Center. The aim is to use digital tools to achieve high-speed and high-precision design validation and construction support. **Rhinoceros** is used for high-precision modeling, while **Grasshopper** assists in generating batch components and construction drawings.
+This project focuses on the BIM model construction and construction support for the **Swimming Center** within the "Three Halls, One Arena, One Park" of the South City Olympic Sports Center. The aim is to use digital tools to achieve high-speed and high-precision design validation and construction support. **Rhinoceros** is used for high-precision modeling, while **Grasshopper** assists in generating batch components and construction drawings.
 
 ---
 
@@ -150,4 +150,4 @@ This project focuses on the BIM model construction and construction support for 
 ### 🔮 Summary & Reflection
 
 - **Advantages**: The Rhino + Grasshopper combination performs exceptionally well in large-scale sports buildings, quickly handling complex structures and batch components
-- **Limitations**: Grasshopper’s computation speed is still limited when handling very large geometries, requiring regional exports to improve efficiency
+- **Limitations**: Grasshopper's computation speed is still limited when handling very large geometries, requiring regional exports to improve efficiency

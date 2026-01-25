@@ -4,7 +4,7 @@ import sharp from 'sharp'
 
 const IMAGE_BASE = 'https://img.neuimay.com/blog'
 const BLUR_MAP_PATH = path.resolve('./src/generated/blurMap.json')
-const OUT_ROOT = path.resolve('./assets/blog-grid')
+const OUT_ROOT = path.resolve('./assets/gallery-grid')
 
 const WIDTH = 800
 const isImage = (name) => /\.(jpe?g|png)$/i.test(name)
@@ -35,7 +35,8 @@ async function downloadAndResize(relativePath) {
   const buffer = Buffer.from(await res.arrayBuffer())
 
   await sharp(buffer)
-    .resize({ width: WIDTH })
+    .rotate()
+    .resize({ width: WIDTH, withoutEnlargement: true })
     .jpeg({
       quality: 70,
       mozjpeg: true,

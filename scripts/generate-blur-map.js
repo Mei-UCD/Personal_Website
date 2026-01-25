@@ -110,6 +110,7 @@ async function downloadImage(url, dest) {
 
 async function generateBlur(imagePath) {
   const buffer = await sharp(imagePath)
+    .rotate()
     .resize(BLUR_WIDTH)
     .jpeg({ quality: BLUR_QUALITY })
     .toBuffer()
