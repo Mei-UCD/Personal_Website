@@ -2,8 +2,8 @@
 title: 'Hello World：网站的开始'
 date: 2025-11-24
 summary: '作为一个从设计到计算机的转码选手，我想在这里留下自己的小角落，也为未来的职业道路点一盏灯。'
-category: personal
-tags: [personal, story]
+category: IT
+tags: [personal]
 ---
 
 ## 前奏

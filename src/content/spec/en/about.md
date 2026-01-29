@@ -48,6 +48,6 @@ From time to time, I record my learning process and small projects here—almost
 
 ### Languages
 
-- Chinese
-- English
-- Japanese
+- Chinese (Native)
+- English (Fluent)
+- Japanese (Advanced – JLPT N1)

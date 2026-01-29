@@ -2,7 +2,7 @@
 title: 'Building a Bilingual Website (i18n)'
 date: 2026-01-10
 summary: 'A practical record of how I implemented a Chinese–English bilingual website with Astro, including design decisions, project structure, and pitfalls.'
-category: dev
+category: IT
 tags: [dev, i18n]
 ---
 

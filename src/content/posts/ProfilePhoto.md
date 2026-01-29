@@ -2,8 +2,8 @@
 title: 'Profile Photo: 关于自画像'
 date: 2025-11-28
 summary: '制作一个自己的个人头像。'
-category: design
-tags: [design]
+category: DESIGN
+tags: [art, procreate]
 ---
 
 ## Procreate

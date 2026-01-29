@@ -2,7 +2,7 @@
 title: '网站双语言 i18n'
 date: 2026-01-10
 summary: '记录在 Astro 中实现中英文双语网站的设计思路、结构划分与踩坑经验。'
-category: dev
+category: IT
 tags: [dev, i18n]
 ---
 

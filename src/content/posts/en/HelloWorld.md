@@ -2,8 +2,8 @@
 title: 'Hello World: The Beginning of This Website'
 date: 2025-11-24
 summary: 'As someone who transitioned from design to computer science, I want to leave a small corner of my own here—and light a lamp for my future career path.'
-category: personal
-tags: [personal, story]
+category: IT
+tags: [personal]
 ---
 
 ## Prelude

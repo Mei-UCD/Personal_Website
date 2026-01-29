@@ -1,8 +1,8 @@
 ---
 title: 'Tracking Website Visitor Analytics'
 date: 2026-01-11
-summary: 'A step-by-step guide to quickly setting up a website analytics platform'
-category: dev
+summary: 'A step-by-step guide to quickly setting up a website analytics platform.'
+category: IT
 tags: [dev, tutorial, umami]
 ---
 
@@ -18,18 +18,42 @@ After logging in, select **New organization**. A dialog will appear — you can 
 Once inside the organization, click **New project** to create a new project.  
 Set your own _Project name_ and _Database password_. For _Region_, it's recommended to choose the region closest to your target audience. For example, if most of your visitors are in Asia, you can select **Asia-Pacific**. Finally, click **Create new project**.
 
-<p style="text-align:center;">
-  <img src="/images/Post/umami1.png" width="800px" />
+<p style="text-align:center; margin: 2rem 0;">
+  <img
+    src="/images/Post/umami1.png"
+    width="800"
+    style="
+      display: inline-block;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    "
+  />
 </p>
-<p style="text-align:center;">
-  <img src="/images/Post/umami2.png" width="800px" />
+<p style="text-align:center; margin: 2rem 0;">
+  <img
+    src="/images/Post/umami2.png"
+    width="800"
+    style="
+      display: inline-block;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    "
+  />
 </p>
 
 After the project is created, click **Connect** at the top.  
 In the popup shown below, make sure option **①** is set to **Session pooler**, then copy the value in box **②** — we'll need it later.
 
-<p style="text-align:center;">
-  <img src="/images/Post/umami3.jpg" width="800px" />
+<p style="text-align:center; margin: 2rem 0;">
+  <img
+    src="/images/Post/umami3.jpg"
+    width="800"
+    style="
+      display: inline-block;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    "
+  />
 </p>
 
 ## Deploying Umami on Vercel

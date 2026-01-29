@@ -2,8 +2,8 @@
 title: 'Profile Photo: About My Self-Portrait'
 date: 2025-11-28
 summary: 'Creating a personal profile photo.'
-category: design
-tags: [design]
+category: DESIGN
+tags: [art, procreate]
 ---
 
 ## Procreate
