@@ -19,9 +19,9 @@ The purpose of this website is not only to **document my work and learning journ
 
 ## About Me
 
-My name is **Mei**. I used to work as an architectural designer, and I am currently navigating the field of image processing. I also have a strong curiosity about **web development and artificial intelligence**.
+My name is **Mei**. I used to work as an architectural designer, and I am working as an image processing engineer now. I also have a strong curiosity about **software/Web development and artificial intelligence**.
 
-From time to time, I record my learning process and small projects here—almost like keeping a diary. I hope that one day, when I look back, I can still feel the thoughts and inspirations I had at that moment.
+From time to time, I record my learning process and side projects here—almost like keeping a diary. I hope that one day, when I look back, I can still feel the thoughts and inspirations I had at that moment.
 
 ## Tech Stack
 
@@ -32,6 +32,7 @@ From time to time, I record my learning process and small projects here—almost
 - HTML
 - CSS
 - JavaScript
+- TypeScript
 - PHP
 - MySQL
 - Markdown
