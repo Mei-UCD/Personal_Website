@@ -1,5 +1,5 @@
 ---
-title: Image to Text Tool
+title: Image to Text
 description: An online **Image-to-Text (OCR)** application built with **Vue + Flask + EasyOCR**, supporting **Japanese and English**.
 image: /images/ImageToText/ImgToText1.jpeg
 category: FullStack
