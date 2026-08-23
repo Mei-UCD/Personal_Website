@@ -31,7 +31,7 @@ export const getStaticPaths = (async () => {
   const perPage = appConfig.notes?.perPage ?? appConfig.posts.perPage
 
   const paths: Array<{
-    params: { page?: string }
+    params: { page: string }
     props: {
       currentPage: number
       totalPage: number
@@ -48,10 +48,11 @@ export const getStaticPaths = (async () => {
 
   const totalPage = Math.ceil(sortedNotes.length / perPage)
 
-  for (let i = 0; i < totalPage; i++) {
+  // Page 1 is src/pages/notes.astro. This file only builds /notes/page/2+
+  for (let i = 1; i < totalPage; i++) {
     paths.push({
       params: {
-        page: i === 0 ? undefined : `page/${i + 1}`,
+        page: String(i + 1),
       },
       props: {
         currentPage: i + 1,
