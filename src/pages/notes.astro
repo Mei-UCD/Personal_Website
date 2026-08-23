@@ -1,0 +1,43 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import NoteList from '@/components/notes/NoteList.astro'
+import NotePagination from '@/components/notes/NotePagination.astro'
+import { getSortedNotes } from '@/utils/content'
+import appConfig from '@/config.json'
+import { getLangFromPath, getTranslations, getLocalizedPath, defaultLang } from '@/utils/i18n'
+
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
+
+const perPage = appConfig.notes?.perPage ?? appConfig.posts.perPage
+const allNotes = await getSortedNotes(lang)
+const totalPage = Math.max(1, Math.ceil(allNotes.length / perPage))
+const currentPage = 1
+const pageNotes = allNotes.slice(0, perPage)
+
+// 给每条算 serial 和 globalIndex
+const notesWithSerial = pageNotes.map((entry, i) => ({
+  entry,
+  serial: allNotes.length - i,
+}))
+
+const getPageUrl = (page: number) =>
+  page === 1
+    ? getLocalizedPath('/notes', lang)
+    : getLocalizedPath(`/notes/page/${page}`, lang)
+---
+
+<PageLayout title={t.notes.title}>
+  <div class="max-w-[800px] mx-auto px-4 py-16">
+    {notesWithSerial.length === 0 ? (
+      <p class="text-center text-secondary">{t.notes.empty}</p>
+    ) : (
+      <>
+        <NoteList notes={notesWithSerial}/>
+        {totalPage > 1 && (
+          <NotePagination current={currentPage} total={totalPage} getPageUrl={getPageUrl} />
+        )}
+      </>
+    )}
+  </div>
+</PageLayout>

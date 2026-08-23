@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import NoteCard from './NoteCard.astro'
+import { getShortDate } from '@/utils/date'
+import { getLangFromPath, getLocalizedPath, defaultLang, getTranslations } from '@/utils/i18n'
+
+interface NoteWithSerial {
+  entry: CollectionEntry<'notes'>
+  serial: number
+}
+
+interface Props {
+  notes: NoteWithSerial[]
+}
+const { notes } = Astro.props
+
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
+
+const grouped = notes.reduce<
+  {
+    year: number
+    notes: NoteWithSerial[]
+  }[]
+>((acc, cur) => {
+  const year = cur.entry.data.date.getFullYear()
+  const lastYearGroup = acc[acc.length - 1]
+
+  if (lastYearGroup && lastYearGroup.year === year) {
+    lastYearGroup.notes.push(cur)
+  } else {
+    acc.push({
+      year,
+      notes: [cur],
+    })
+  }
+
+  return acc
+}, [])
+
+---
+
+{grouped.map(group => (
+    <section class="note-year-group mb-12">
+      <header class="flex items-end justify-between border-b border-primary/30 pb-4 mb-8">
+        <h2 class="leading-none">
+          <span class="block text-[10px] tracking-[0.3em] text-secondary mb-1">
+            {t.notes.yearLabel}
+          </span>
+
+          <span class="block text-6xl font-medium tracking-tight">
+            {group.year}
+          </span>
+        </h2>
+
+        <span class="text-xs text-secondary pb-1">
+          {t.notes.yearCount.replace('{count}', String(group.notes.length))}
+        </span>
+      </header>
+  
+      {group.notes.map(note => (
+        <NoteCard entry={note.entry} serial={note.serial} />
+      ))}
+    </section>
+  ))}

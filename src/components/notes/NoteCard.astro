@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import NoteDate from './NoteDate.astro'
+import { getLangFromPath, getTranslations, getLocalizedPath, defaultLang } from '@/utils/i18n'
+
+
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
+
+interface Props {
+  entry: CollectionEntry<'notes'>
+  serial: number
+}
+
+const { entry, serial } = Astro.props
+
+const { remarkPluginFrontmatter } = await entry.render()
+const pureSlug = entry.slug.replace(/^en\//, '')
+
+---
+
+
+<div class="note-card flex gap-6 mb-10">
+    <NoteDate date={entry.data.date} lang={lang} />
+  
+    <a href={getLocalizedPath(`/notes/${pureSlug}`, lang)} class="note-card-body flex-1 border border-primary/50 rounded-lg overflow-hidden hover:border-accent/50 transition-colors">
+      {entry.data.cover && (
+        <img src={entry.data.cover} alt={entry.data.title} class="w-full aspect-[16/3] object-cover" loading="lazy" />
+      )}
+  
+      <div class="p-5">
+        {entry.data.tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mb-3">
+            {entry.data.tags.map((tag: string) => (
+              <span class="text-xs px-2 py-0.5 border border-primary/40 rounded">{tag}</span>
+            ))}
+          </div>
+        )}
+  
+        <h2 class="text-lg font-bold">{entry.data.title}</h2>
+  
+        {entry.data.summary && (
+          <p class="mt-2 text-sm text-secondary line-clamp-3">{entry.data.summary}</p>
+        )}
+  
+        <div class="mt-4 flex items-center justify-between text-xs text-secondary">
+          <span>{t.notes.serialPrefix}{serial}</span>
+          <span class="text-accent">{t.notes.readMore} →</span>
+        </div>
+      </div>
+    </a>
+  </div>

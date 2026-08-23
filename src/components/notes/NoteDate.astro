@@ -1,0 +1,18 @@
+---
+interface Props {
+  date: Date
+  lang: 'zh' | 'en'
+}
+const { date, lang } = Astro.props
+
+const day = date.getDate()
+const weekday = date.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', { weekday: 'short' })
+const month = date.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', { month: 'long' })
+---
+
+<aside class="note-date shrink-0 w-16 text-right pt-2">
+  <div class="text-4xl font-light leading-none">{day}</div>
+  <div class="mt-1 text-xs text-secondary">
+    {lang === 'zh' ? `${month} / ${weekday}` : `${month} / ${weekday}`}
+  </div>
+</aside>

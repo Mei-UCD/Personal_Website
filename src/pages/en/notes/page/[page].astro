@@ -1,0 +1,118 @@
+---
+import type { GetStaticPaths } from 'astro'
+import PageLayout from '@/layouts/PageLayout.astro'
+import NoteList from '@/components/notes/NoteList.astro'
+import NotePagination from '@/components/notes/NotePagination.astro'
+import { getSortedNotes, getHotTags, getAllCategories, getAllTags } from '@/utils/content'
+import appConfig from '@/config.json'
+import SectionBlock from '@/components/SectionBlock.astro'
+import TagList from '@/components/TagList.astro'
+import CategoryList from '@/components/CategoryList.astro'
+import type { CollectionEntry } from 'astro:content'
+import Hero from '@/components/hero/Hero.astro'
+import { getLangFromPath, getTranslations, getLocalizedPath, defaultLang } from '@/utils/i18n'
+
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang as 'zh' | 'en')
+
+interface NoteWithSerial {
+  entry: CollectionEntry<'notes'>
+  serial: number
+}
+interface Props {
+  currentPage: number
+  totalPage: number
+  data: NoteWithSerial[]
+}
+
+const { currentPage, totalPage, data } = Astro.props
+
+export const getStaticPaths = (async () => {
+  const perPage = appConfig.notes?.perPage ?? appConfig.posts.perPage
+
+  const paths: Array<{
+    params: { page?: string }
+    props: {
+      currentPage: number
+      totalPage: number
+      data: NoteWithSerial[]
+      locale: string
+    }
+    locale?: string
+  }> = []
+
+   const locale = 'zh'
+
+
+  const sortedNotes = await getSortedNotes(locale)
+
+  const totalPage = Math.ceil(sortedNotes.length / perPage)
+
+  for (let i = 0; i < totalPage; i++) {
+    paths.push({
+      params: {
+        page: i === 0 ? undefined : `page/${i + 1}`,
+      },
+      props: {
+        currentPage: i + 1,
+        totalPage,
+        data: sortedNotes.slice(i * perPage, (i + 1) * perPage).map((entry, index) => ({
+          entry,
+          serial: sortedNotes.length - i * perPage - index,
+        })),
+        locale,
+      },
+      locale,
+    })
+  }
+
+  return paths
+}) satisfies GetStaticPaths
+
+
+const hotTags = await getHotTags(5, lang)
+const allTags = await getAllTags(lang)
+const allCategories = await getAllCategories(lang)
+
+const getPageUrl = (page: number) => {
+  const path = page === 1 ? '/notes' : `/notes/page/${page}`
+  return getLocalizedPath(path, lang)
+}
+---
+
+<PageLayout>
+  <div>
+    {currentPage === 1 && <Hero />}
+    <div class="max-w-[1100px] px-4 md:px-8 py-20 mx-auto grid lg:grid-cols-[auto_300px] gap-10">
+      <div class="min-w-0">
+        <SectionBlock title={t.pages.latestNotes}>
+          <NoteList notes={data} />
+          {
+            totalPage > 1 && (
+              <NotePagination current={currentPage} total={totalPage} getPageUrl={getPageUrl} />
+            )
+          }
+        </SectionBlock>
+      </div>
+      <div>
+        <aside class="md:sticky md:top-20 space-y-10">
+          <SectionBlock title={t.pages.categories}>
+            <CategoryList categories={allCategories} />
+          </SectionBlock>
+          <SectionBlock title={t.pages.hotTags}>
+            <TagList tags={hotTags} />
+            {
+              allTags.length > hotTags.length && (
+                <div class="mt-2 text-right">
+                  <a class="text-sm text-secondary hover:text-accent" href={getLocalizedPath('/tags', lang)}>
+                    {t.pages.moreTags} <i class="iconfont icon-arrow-right" />
+                  </a>
+                </div>
+              )
+            }
+          </SectionBlock>
+        </aside>
+      </div>
+    </div>
+  </div>
+</PageLayout>

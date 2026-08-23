@@ -1,0 +1,33 @@
+---
+import { getLangFromPath, getTranslations, getLocalizedPath, defaultLang } from '@/utils/i18n'
+
+interface Props {
+  current: number
+  total: number
+  getPageUrl: (page: number) => string
+}
+
+const { current, total, getPageUrl } = Astro.props
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+const t = getTranslations(lang)
+---
+
+<nav class="note-pagination mt-16 flex items-center justify-between text-sm text-secondary">
+  <div>
+    {current > 1 && (
+      <a href={getPageUrl(current - 1)} class="hover:text-accent">
+        ← {t.notes.newer}
+      </a>
+    )}
+  </div>
+
+  <span>{current}</span>
+
+  <div>
+    {current < total && (
+      <a href={getPageUrl(current + 1)} class="hover:text-accent">
+        {t.notes.older} →
+      </a>
+    )}
+  </div>
+</nav>

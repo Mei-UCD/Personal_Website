@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { getNoteSlug, getLocalizedPath, defaultLang, getLangFromPath } from '@/utils/i18n'
+
+interface Props {
+  prev?: CollectionEntry<'notes'>
+  next?: CollectionEntry<'notes'>
+  class?: string
+}
+
+const { prev, next, class: className } = Astro.props
+const lang = getLangFromPath(Astro.url.pathname) ?? defaultLang
+---
+
+<div class="grid grid-cols-2" class:list={[className]}>
+  <div>
+    {
+      prev && (
+        <a class="flex items-baseline gap-2 hover:text-accent" href={getLocalizedPath(`/notes/${getNoteSlug(prev.slug)}`, lang)}>
+          <i class="iconfont icon-arrow-left" />
+          <span>{prev.data.title}</span>
+        </a>
+      )
+    }
+  </div>
+  <div>
+    {
+      next && (
+        <a
+          class="flex items-baseline justify-end gap-2 hover:text-accent"
+          href={getLocalizedPath(`/posts/${getNoteSlug(next.slug)}`, lang)}
+        >
+          <span>{next.data.title}</span>
+          <i class="iconfont icon-arrow-right" />
+        </a>
+      )
+    }
+  </div>
+</div>
