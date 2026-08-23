@@ -67,6 +67,10 @@
       "icon": "icon-archive"
     },
     {
+      "link": "/notes",
+      "icon": "icon-pen"
+    },
+    {
       "link": "/projects",
       "icon": "icon-flask"
     },
@@ -107,5 +111,9 @@
     "microsoftClarity": {
       "projectId": ""
     }
+  },
+
+  "notes": {
+    "perPage": 10
   }
 }

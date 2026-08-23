@@ -95,3 +95,9 @@ export function getMenuWithLang(
     }
   })
 }
+
+/* Notes */
+export function getNoteSlug(slug: string) {
+  // en/helloworld → helloworld
+  return slug.includes('/') ? slug.split('/').slice(1).join('/') : slug
+}

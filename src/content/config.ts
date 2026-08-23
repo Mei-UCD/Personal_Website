@@ -28,6 +28,19 @@ const postsCollection = defineCollection({
 //   }),
 // })
 
+const notesCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    summary: z.string().optional(),
+    cover: z.string().optional(), // 卡片顶部大图，可选
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+    comments: z.boolean().default(true),
+  }),
+})
+
 const projectsCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -60,6 +73,7 @@ const friendsCollection = defineCollection({
 
 export const collections = {
   posts: postsCollection,
+  notes: notesCollection,
   projects: projectsCollection,
   spec: specCollection,
   friends: friendsCollection,

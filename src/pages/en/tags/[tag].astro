@@ -1,5 +1,92 @@
 ---
 import type { GetStaticPaths } from 'astro'
+import { getAllContentTags, getOldestPosts, getSortedNotes, slugify } from '@/utils/content'
+import PageLayout from '@/layouts/PageLayout.astro'
+import Timeline from '@/components/Timeline.astro'
+import NoteTimeline from '@/components/notes/NoteTimeline.astro'
+import Highlight from '@/components/Highlight.astro'
+import { languages } from '@/utils/i18n'
+import { getLangFromPath, getTranslations, defaultLang, type Lang } from '@/utils/i18n'
+
+const lang = (getLangFromPath(Astro.url.pathname) ?? defaultLang) as Lang
+const t = getTranslations(lang)
+
+export const getStaticPaths = (async () => {
+  const paths: {
+    params: { tag: string }
+    props: { tag: { name: string; slug: string; count: number } }
+    locale?: string
+  }[] = []
+
+  for (const lang of languages) {
+    const allTags = await getAllContentTags(lang)
+
+    for (const tag of allTags) {
+      paths.push({
+        params: { tag: tag.slug },
+        props: { tag },
+        locale: lang,
+      })
+    }
+  }
+
+  return paths
+}) satisfies GetStaticPaths
+
+interface Props {
+  tag: {
+    name: string
+    slug: string
+    count: number
+  }
+}
+
+const { tag } = Astro.props
+
+const oldestPosts = await getOldestPosts(lang).then((posts) => {
+  return posts.filter((post) => post.data.tags.findIndex((t) => slugify(t) === tag.slug) >= 0)
+})
+
+const taggedNotes = await getSortedNotes(lang).then((notes) => {
+  return notes.filter((note) => note.data.tags.findIndex((t) => slugify(t) === tag.slug) >= 0)
+})
+---
+
+<PageLayout title={`${t.tags.title} · ${tag.name}`}>
+  <div class="max-w-[800px] mx-auto px-4 py-16">
+    <header class="space-y-4 mb-8">
+      <h1 class="text-4xl font-bold">
+        {t.tags.title}
+        <Highlight>{tag.name}</Highlight>
+      </h1>
+    </header>
+
+    {oldestPosts.length > 0 && (
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold mb-2">{t.tags.postsHeading}</h2>
+        <p>
+          {t.tags.count.replace('{count}', `${oldestPosts.length}`)}
+        </p>
+        <Timeline posts={oldestPosts} />
+      </section>
+    )}
+
+    {taggedNotes.length > 0 && (
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold mb-2">{t.tags.notesHeading}</h2>
+        <p>
+          {t.tags.notesCount.replace('{count}', `${taggedNotes.length}`)}
+        </p>
+        <NoteTimeline notes={taggedNotes} />
+      </section>
+    )}
+  </div>
+</PageLayout>
+
+
+
+<!-- ---
+import type { GetStaticPaths } from 'astro'
 import { getAllTags, getOldestPosts, slugify } from '@/utils/content'
 import PageLayout from '@/layouts/PageLayout.astro'
 import Timeline from '@/components/Timeline.astro'
@@ -63,4 +150,7 @@ const oldestPosts = await getOldestPosts(lang).then((posts) => {
     </header>
     <Timeline posts={oldestPosts} />
   </div>
-</PageLayout>
+</PageLayout> -->
+
+
+
