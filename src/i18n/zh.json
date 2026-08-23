@@ -19,6 +19,10 @@
       "link": "/archives"
     },
     {
+      "name": "手记",
+      "link": "/notes"
+    },
+    {
       "name": "项目",
       "link": "/projects"
     },
@@ -37,6 +41,7 @@
   ],
   "pages": {
     "latestPosts": "最新发布",
+    "latestNotes": "最新手记",
     "categories": "分类",
     "hotTags": "热门标签",
     "moreTags": "更多标签",
@@ -51,6 +56,9 @@
   "tags": {
     "title": "标签：",
     "count": "共有 {count} 篇文章",
+    "notesCount": "共有 {count} 篇手记",
+    "postsHeading": "Posts",
+    "notesHeading": "Notes",
     "cloud": "标签云",
     "tagsCount": "共有 {count} 个标签",
     "comment": "作者没有准备标签 "
@@ -115,7 +123,8 @@
   },
   "gallery": {
     "title": "时光廊",
-    "content": "建设中"
+    "content": "建设中",
+    "readMore": "想看更多？前往完整相册"
   },
 
   "actions": {
@@ -136,5 +145,16 @@
     "title": "404",
     "description": "对不起，这个链接坏了。可能有些东西被删除，或者被移动了。无论如何，这里没什么可看的。",
     "link": "传送回首页"
+  },
+
+  "notes": {
+    "title": "手记",
+    "yearLabel": "ANNO",
+    "yearCount": "{count} LETTERS",
+    "readMore": "阅读全文",
+    "serialPrefix": "LETTER №",
+    "newer": "更近的手记",
+    "older": "更早的手记",
+    "empty": "还没有手记，敬请期待。"
   }
 }

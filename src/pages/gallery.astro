@@ -60,6 +60,19 @@ const { description, image } = Astro.props
             </section>
           ))}
 
+        <div class="gallery-more">
+          <!-- <p class="gallery-more-hint text-secondary/60">{t.gallery.readMore}</p> -->
+          <a
+            href="https://gallery.neuimay.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="gallery-more-link group text-secondary hover:text-accent transition-colors"
+          >
+            {t.gallery.readMore}
+            <i class="ml-1 iconfont icon-external-link" />
+          </a>
+        </div>
+
         </section>
       </div>
 

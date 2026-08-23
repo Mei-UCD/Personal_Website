@@ -20,6 +20,10 @@
       "link": "/archives"
     },
     {
+      "name": "Notes",
+      "link": "/notes"
+    },
+    {
       "name": "Projects",
       "link": "/projects"
     },
@@ -39,6 +43,7 @@
 
   "pages": {
     "latestPosts": "Latest Posts",
+    "latestNotes": "Latest Notes",
     "categories": "Categories",
     "hotTags": "Hot Tags",
     "moreTags": "More Tags",
@@ -53,9 +58,12 @@
   "tags": {
     "title": "Tag:",
     "count": "{count} posts in total",
+    "notesCount": "{count} notes in total",
+    "postsHeading": "Posts",
+    "notesHeading": "Notes",
     "cloud": "Tag Cloud",
     "tagsCount": "{count} tags in total",
-    "comment": "The author hasn't prepared any tags "
+    "comment": "The author hasn't prepared any tags"
   },
   "post": {
     "edited": "Edited",
@@ -116,7 +124,8 @@
   },
   "gallery": {
     "title": "Gallery",
-    "content": "Under consideration"
+    "content": "Under consideration",
+    "readMore": "Want to see more? View full gallery"
   },
 
   "actions": {
@@ -137,5 +146,16 @@
     "title": "404",
     "description": "Sorry, this link is broken. Maybe some things have been deleted or moved. Anyway, there's nothing to see here.",
     "link": "Back to home"
+  },
+
+  "notes": {
+    "title": "Notes",
+    "yearLabel": "ANNO",
+    "yearCount": "{count} LETTERS",
+    "readMore": "Read more",
+    "serialPrefix": "LETTER №",
+    "newer": "Newer notes",
+    "older": "Older notes",
+    "empty": "No notes yet."
   }
 }

@@ -1,93 +1,3 @@
-<!-- ---
-const locations = [
-  {
-    id: 'tokyo',
-    title: 'Tokyo',
-    date: '2025 · Spring',
-  },
-  {
-    id: 'kyoto',
-    title: 'Kyoto',
-    date: '2024 · Summer',
-  },
-]
----
-
-<nav class="timeline">
-    <span class="timeline-label">Locations</span>
-    {locations.map(loc => (
-      <a href={`#${loc.id}`} class="timeline-item">
-        <span class="dot"></span>
-        <div class="content">
-          <h3>{loc.title}</h3>
-          <p class="date">{loc.date}</p>
-        </div>
-      </a>
-    ))}
-  </nav>
-  
-  <style>
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    border-left: 1px solid rgba(255,255,255,0.08);
-    padding-left: 16px;
-  }
-  
-  .timeline-item {
-    display: flex;
-    gap: 12px;
-    text-decoration: none;
-    color: rgba(255,255,255,0.6);
-    transition: color 0.2s ease;
-  }
-  
-  .timeline-item:hover {
-    color: rgba(255,255,255,0.95);
-  }
-
-  .timeline-label {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  opacity: 0.35;
-  margin-bottom: 24px;
-  display: block;
-}
-
-  
-  .dot {
-    width: 6px;
-    height: 6px;
-    margin-top: 6px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.3);
-    flex-shrink: 0;
-  }
-  
-  .timeline-item:hover .dot {
-    background: white
-  }
-  
-  .content h3 {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
-  
-  .date {
-    font-size: 12px;
-    opacity: 0.6;
-  }
-  
-  .places {
-    font-size: 12px;
-    opacity: 0.4;
-  }
-  </style> -->
-
-
 
 ---
 const locations = [
@@ -159,6 +69,25 @@ const locations = [
   <span class="timeline-label text-accent">
     Locations
   </span>
+
+  <a
+    href="https://gallery.neuimay.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="timeline-item timeline-more group text-secondary"
+  >
+    <span class="dot"></span>
+
+    <div class="content">
+      <h3 class="title">
+        Explore more?
+        <i class="ml-1 iconfont icon-external-link text-xs" />
+      </h3>
+      <p class="date text-secondary/70">
+        future
+      </p>
+    </div>
+  </a>
 
   {locations.map(loc => (
     <a
