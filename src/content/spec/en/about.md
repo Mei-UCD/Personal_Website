@@ -52,3 +52,4 @@ From time to time, I record my learning process and side projects here—almost 
 - Chinese (Native)
 - English (Fluent)
 - Japanese (Advanced – JLPT N1)
+- German （Beginer）
