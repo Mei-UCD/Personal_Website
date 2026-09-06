@@ -1,125 +1,3 @@
-<!-- ---
-import { getCollection } from 'astro:content'
-
-const projects = await getCollection('projects')
----
-
-<ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-  {
-    projects.map((project) => (
-      <li>
-        <a href={project.data.link} target="_blank" rel="noopener noreferrer external">
-          <div class="rounded-lg bg-accent/10 overflow-hidden group">
-            <div class="aspect-video overflow-hidden">
-              <img
-                class="size-full object-cover transition-transform group-hover:scale-110"
-                src={project.data.image}
-                alt={`Project cover: ${project.data.title}`}
-                loading="lazy"
-              />
-            </div>
-            <div class="p-4">
-              <div class="group-hover:text-accent">
-                <span class="text-xl font-bold">{project.data.title}</span>
-                <i class="ml-2 iconfont icon-external-link" />
-              </div>
-              <p class="mt-2 text-sm line-clamp-2">{project.data.description}</p>
-            </div>
-          </div>
-        </a>
-      </li>
-    ))
-  }
-</ul> -->
-
-<!-- ---
-import { getCollection } from 'astro:content'
-
-const projects = await getCollection('projects')
----
-
-
-<ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-  {
-    projects.map((project) => (
-      <li>
-        <a href={`/projects/${project.slug}`} >
-          <div class="rounded-lg bg-accent/10 overflow-hidden group">
-            <div class="aspect-video overflow-hidden">
-              <img
-                class="size-full object-cover transition-transform group-hover:scale-110"
-                src={project.data.image}
-                alt={`Project cover: ${project.data.title}`}
-                loading="lazy"
-              />
-            </div>
-            <div class="p-4">
-              <div class="group-hover:text-accent">
-                <span class="text-xl font-bold">{project.data.title}</span>
-                <i class="ml-2 iconfont icon-external-link" />
-              </div>
-              <p class="mt-2 text-sm line-clamp-2">{project.data.description}</p>
-            </div>
-          </div>
-        </a>
-      </li>
-    ))
-  }
-</ul> -->
-
-
-<!-- ---
-import { getCollection } from 'astro:content'
-const projects = await getCollection('projects')
-const categories = {
-  'Architecture': projects.filter((p) => p.data.category?.includes('Architecture')),
-  'Full Stack': projects.filter((p) => p.data.category?.includes('FullStack')),
-  'Data Science & ML': projects.filter((p) => p.data.category?.includes('DataScience') || p.data.category?.includes('ML')),
-}
----
-{Object.entries(categories).map(([categoryName, categoryProjects]) => (
-  <>
-    <h2 class="text-2xl font-bold mt-12 mb-4">{categoryName}</h2>
-
-    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-      {
-        categoryProjects.map((project) => (
-          <li>
-            <a href={`/projects/${project.slug}`}>
-              <div class="rounded-lg bg-accent/10 overflow-hidden group">
-                <div class="aspect-video overflow-hidden">
-                  <img
-                    class="size-full object-cover transition-transform group-hover:scale-110"
-                    src={project.data.image}
-                    alt={`Project cover: ${project.data.title}`}
-                    loading="lazy"
-                  />
-                </div>
-
-                <div class="p-4">
-                  <div class="group-hover:text-accent">
-                    <span class="text-xl font-bold">{project.data.title}</span>
-                    <i class="ml-2 iconfont icon-external-link" />
-                  </div>
-                  <p class="mt-2 text-sm line-clamp-2">{project.data.description}</p>
-                </div>
-              </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </>
-))} -->
-
-
-
-
-
-
-
-
-
 ---
 import { getCollection } from 'astro:content'
 import { getLangFromPath, defaultLang, getLocalizedPath, getPostSlug } from '@/utils/i18n'
@@ -144,16 +22,31 @@ const categories = {
 }
 ---
 
-<nav class="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-100">
-  <div class="w-full flex justify-center gap-4 py-1.5">
+<!-- <nav class="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-100">
+  <div class="category-scroll w-full flex justify-start sm:justify-center gap-4 py-1.5 overflow-x-auto px-2">
     {Object.keys(categories).map(catName => (
       <a 
         href={`#${catName.replace(/\s+/g, '-')}`} 
-        class="px-4 py-1.5 rounded-full bg-gray-100 text-gray-800 hover:bg-accent hover:text-white transition shadow-sm hover:shadow"
+        class="shrink-0 whitespace-nowrap px-4 py-1.5 rounded-full bg-gray-100 text-gray-800 hover:bg-accent hover:text-white transition shadow-sm hover:shadow"
       >
         {catName}
       </a>
     ))}
+  </div>
+</nav> -->
+
+<nav class="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-100">
+  <div class="category-wrapper">
+    <div class="category-scroll w-full flex justify-start sm:justify-center gap-4 py-1.5 overflow-x-auto px-2">
+      {Object.keys(categories).map(catName => (
+        <a
+          href={`#${catName.replace(/\s+/g, '-')}`}
+          class="shrink-0 whitespace-nowrap px-4 py-1.5 rounded-full bg-gray-100 text-gray-800 hover:bg-accent hover:text-white transition shadow-sm hover:shadow"
+        >
+          {catName}
+        </a>
+      ))}
+    </div>
   </div>
 </nav>
 
@@ -191,3 +84,63 @@ const categories = {
   </>
 ))}
 
+
+<style>
+  .category-wrapper {
+    position: relative;
+  }
+
+  .category-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .category-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .category-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50px;
+      height: 100%;
+      pointer-events: none;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgb(var(--color-bg-primary))
+      );
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    .category-wrapper.scrolled::after {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  const categoryScroll = document.querySelector('.category-scroll')
+  const categoryWrapper = document.querySelector('.category-wrapper')
+
+  if (categoryScroll && categoryWrapper) {
+    const updateScrollHint = () => {
+      const maxScroll =
+        categoryScroll.scrollWidth - categoryScroll.clientWidth
+
+      categoryWrapper.classList.toggle(
+        'scrolled',
+        categoryScroll.scrollLeft > 5 || maxScroll <= 5
+      )
+    }
+
+    categoryScroll.addEventListener('scroll', updateScrollHint)
+    window.addEventListener('resize', updateScrollHint)
+
+    updateScrollHint()
+  }
+</script>
